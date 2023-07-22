@@ -16,6 +16,16 @@ type CustomVariables = {
 		default: string;
     small: string;
 	};
+	block: {
+		minWidth: string;
+		maxWidth: string;
+		bodyHeight: string;
+		barHeight: string;
+		fontSize: {
+			body: string;
+			bar: string;
+		}
+	}
 };
 
 declare module "@mui/material/styles" {
@@ -51,7 +61,7 @@ const palette: PaletteOptions = {
     primary: "#ffffff",
   },
 	gradient: {
-		red: "linear-gradient(30deg, #f20486, #ff6068)",
+		red: "linear-gradient(30deg, #F20486, #FF6068)",
 	},
 };
 
@@ -59,6 +69,16 @@ const custom: CustomVariables = {
   borderRadius: {
     default: "23px",
     small: "8px"
+  },
+  block: {
+	minWidth: "230px",
+  	maxWidth: "300px",
+	bodyHeight: "100px",
+	barHeight: "30px",
+	fontSize: {
+		body: "20px",
+		bar: "15px"
+	}
   }
 };
 
