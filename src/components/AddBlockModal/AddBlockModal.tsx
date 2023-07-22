@@ -6,7 +6,7 @@ import { FormModal } from "../FormModal";
 import { FormModalProps } from "../FormModal/types";
 import { useState } from "react";
 import { BlockPresenter } from "./BlockPresenter";
-import { blocksById } from "./constants";
+import { blocksByMode } from "./constants";
 
 const blockValuesByType = {
   [BlockType.CONDITION]: Conditions,
@@ -14,19 +14,41 @@ const blockValuesByType = {
 } as Record<BlockType, typeof Conditions | typeof Functions>;
 
 export function AddBlockModal(props: FormModalProps) {
-  const { selectedBlockModal, setBlockModal } = usePayfluxStore((state) => ({
-    selectedBlockModal: state.selectedBlockModal,
-    setBlockModal: state.setBlockModal,
-  }));
+  const {
+    selectedBlockModal,
+    blockIdToProps,
+    setBlockIdToProps,
+    addChild,
+    setBlockModal,
+  } = usePayfluxStore();
   const [selectedBlock, setSelectedBlock] = useState<
     Conditions | Functions | null
   >(null);
 
   if (!selectedBlockModal) return null;
 
+  const addBlock = (type: BlockType, mode: Conditions | Functions) => {
+    const newId = (Object.keys(blockIdToProps).length + 1).toString();
+    setBlockIdToProps(newId, { type, mode });
+    if (type === BlockType.CONDITION) {
+      addChild(selectedBlockModal.id, newId);
+    }
+    addChild(selectedBlockModal.id, newId);
+  };
+
   const handleClose = () => {
     setBlockModal(null);
     setSelectedBlock(null);
+  };
+
+  const handleBlockClick = (type: BlockType, mode: Conditions | Functions) => {
+    if (!blocksByMode[mode]) {
+      addBlock(type, mode);
+      setBlockModal(null);
+      return;
+    }
+
+    setSelectedBlock(mode);
   };
 
   return (
@@ -38,10 +60,10 @@ export function AddBlockModal(props: FormModalProps) {
           ).map((block: Conditions | Functions) => (
             <BlockPresenter
               bodyText={block}
-              onClick={() => setSelectedBlock(block)}
+              onClick={() => handleBlockClick(selectedBlockModal.type, block)}
             />
           ))}
-        {selectedBlock && blocksById[selectedBlock]}
+        {selectedBlock && blocksByMode[selectedBlock]}
       </Box>
     </FormModal>
   );

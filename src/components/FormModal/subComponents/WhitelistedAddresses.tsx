@@ -1,32 +1,34 @@
-import { Box, TextField, Typography } from "@mui/material"
-import { useState } from "react"
-import { SubmitButton } from "./SubmitButton"
+import { Box, TextField, Typography } from "@mui/material";
+import { useState } from "react";
+import { SubmitButton } from "./SubmitButton";
 
 export const WhitelistedAddresses = () => {
-  const [text, setText] = useState<string>("")
+  const [text, setText] = useState<string>("");
   return (
-		<Box 
-			component="form"
-			noValidate
+    <Box
+      component="form"
+      noValidate
       autoComplete="off"
-			sx={{
+      sx={{
         width: "100%",
-				display: "flex",
-				flexDirection: "column",
+        display: "flex",
+        flexDirection: "column",
         alignItems: "center",
         gap: "10px",
-			}}
-		>
-			<Box sx={{
-        width: "100%",
-				display: "flex",
-				flexDirection: "rows",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "10px",
-			}}>
-				<Typography variant="h6">Whitelisted Addresses :</Typography>
-				<TextField
+      }}
+    >
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "rows",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "10px",
+        }}
+      >
+        <Typography variant="h6">Whitelisted Addresses :</Typography>
+        <TextField
           label="Whitelisted Addresses"
           multiline
           rows={4}
@@ -37,8 +39,8 @@ export const WhitelistedAddresses = () => {
             width: "50%",
           }}
         />
-			</Box>
+      </Box>
       <SubmitButton onClick={() => {}} />
-		</Box>
-	)
-}
+    </Box>
+  );
+};
