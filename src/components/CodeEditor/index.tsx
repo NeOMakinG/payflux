@@ -38,6 +38,7 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
     >
       {snippets.map((snippet, index) => (
         <SyntaxHighlighter
+          key={index}
           customStyle={{
             margin: 0,
             padding: 0,
