@@ -41,7 +41,10 @@ export function AddBlockModal(props: FormModalProps) {
         const secondId = (Object.keys(blockIdToProps).length + 1).toString();
         addPlus(selectedBlockModal.id, secondId);
       }
-      setBlockIdToProps(id, { type, mode });
+      setBlockIdToProps(id, {
+        type: selectedBlockModal.type,
+        mode,
+      });
       setBlockModal(null);
       return;
     }
