@@ -5,6 +5,7 @@ type ColorsObject = {
     default: string;
     dark: string;
     sidebar: string;
+    collapse: string;
   };
   border: {
     light: string;
@@ -41,6 +42,7 @@ declare module "@mui/material/styles" {
     dark: string;
     paper: string;
     sidebar: string;
+    collapse: string;
   }
 
   interface Theme {
@@ -62,6 +64,7 @@ const palette: PaletteOptions = {
     default: "#282828",
     dark: "#212121",
     sidebar: "#2D2D2D",
+    collapse: "#3F3F3F",
   },
   border: {
     light: "#4A4A4A",
