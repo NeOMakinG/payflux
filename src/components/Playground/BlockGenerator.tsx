@@ -1,17 +1,16 @@
 import { BlockType, Functions } from "../../shared/functions"
 import { BlockId } from "../../shared/structure"
+import { usePayfluxStore } from "../../zustand";
 import { Block } from "../Block/block"
 
 export const BlockGenerator = ({ id }: { id: BlockId }) => {
-	console.log(id, typeof id);
+  const blockIdToProps = usePayfluxStore(state => state.blockIdToProps);
+  const props = blockIdToProps[id];
+
 	if (id === "start") return (
 		<Block type={BlockType.START} />
-	);
-	if (typeof id === "string" && id.includes("end")) return (
-		<Block type={BlockType.END} />
-	);
-
+	)
 	return (
-		<Block type={BlockType.FUNCTION} content={{ name: `function-${id}` as Functions, context: undefined }} />
+		<Block {...props} content={{ name: `${props.type}-${id}` as Functions, context: undefined }} />
 	)
 }
