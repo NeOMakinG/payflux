@@ -1,9 +1,28 @@
 .tf-nc {
-  padding: 0!important;
-  border: none !important;
+	padding: 0 !important;
+	border: none !important;
 }
 
-.tf-tree .tf-nc:before, .tf-tree .tf-nc:after, .tf-tree li li:before {
-  border-color:  #F20486;
-  border-width: 2px;
+.tf-tree .tf-nc:before,
+.tf-tree .tf-nc:after,
+.tf-tree li li:before {
+	border-color: #f20486;
+	border-width: 2px;
+	transform: scaleX(0);
+	transform-origin: top;
+	animation: fadeIn 0.2s linear forwards;
+	animation-delay: 0.2s;
+}
+
+.tf-tree .tf-nc:after{
+  transform-origin: bottom;
+}
+
+@keyframes fadeIn {
+	from {
+		transform: scaleY(0);
+	}
+	to {
+		transform: scaleY(1);
+	}
 }
