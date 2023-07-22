@@ -4,7 +4,6 @@ import { enumToArray } from "../../utils/enumToArray";
 import { usePayfluxStore } from "../../zustand";
 import { FormModal } from "../FormModal";
 import { FormModalProps } from "../FormModal/types";
-import { useState } from "react";
 import { BlockPresenter } from "./BlockPresenter";
 import { blocksByMode } from "./constants";
 
@@ -21,9 +20,6 @@ export function AddBlockModal(props: FormModalProps) {
     addChild,
     setBlockModal,
   } = usePayfluxStore();
-  const [selectedBlock, setSelectedBlock] = useState<
-    Conditions | Functions | null
-  >(null);
 
   if (!selectedBlockModal) return null;
 
@@ -38,7 +34,6 @@ export function AddBlockModal(props: FormModalProps) {
 
   const handleClose = () => {
     setBlockModal(null);
-    setSelectedBlock(null);
   };
 
   const handleBlockClick = (type: BlockType, mode: Conditions | Functions) => {
@@ -48,13 +43,13 @@ export function AddBlockModal(props: FormModalProps) {
       return;
     }
 
-    setSelectedBlock(mode);
+    setBlockModal({ ...selectedBlockModal, mode });
   };
 
   return (
     <FormModal {...props} onClose={handleClose}>
       <Box display="flex" alignItems="center" flexWrap="wrap">
-        {!selectedBlock &&
+        {!selectedBlockModal.mode &&
           enumToArray<Conditions | Functions>(
             blockValuesByType[selectedBlockModal.type]
           ).map((block: Conditions | Functions) => (
@@ -63,7 +58,7 @@ export function AddBlockModal(props: FormModalProps) {
               onClick={() => handleBlockClick(selectedBlockModal.type, block)}
             />
           ))}
-        {selectedBlock && blocksByMode[selectedBlock]}
+        {selectedBlockModal.mode && blocksByMode[selectedBlockModal.mode]}
       </Box>
     </FormModal>
   );

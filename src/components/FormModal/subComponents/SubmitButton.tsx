@@ -1,10 +1,37 @@
-import { Button } from "@mui/material"
+import { Button } from "@mui/material";
+import { BlockType } from "../../../shared/functions";
+import { usePayfluxStore } from "../../../zustand";
 
 type SubmitButtonProps = {
-  onClick: () => void;
-}
+  // eslint-disable-next-line
+  context: any;
+};
 
-export const SubmitButton = ({ onClick }: SubmitButtonProps) => {
+export const SubmitButton = ({ context }: SubmitButtonProps) => {
+  const {
+    selectedBlockModal,
+    blockIdToProps,
+    setBlockIdToProps,
+    addChild,
+    setBlockModal,
+  } = usePayfluxStore();
+
+  if (!selectedBlockModal) return null;
+
+  const handleClick = () => {
+    const newId = (Object.keys(blockIdToProps).length + 1).toString();
+    setBlockIdToProps(newId, {
+      type: selectedBlockModal.type,
+      mode: selectedBlockModal.mode,
+      context,
+    });
+    if (selectedBlockModal.type === BlockType.CONDITION) {
+      addChild(selectedBlockModal.id, newId);
+    }
+    addChild(selectedBlockModal.id, newId);
+    setBlockModal(null);
+  };
+
   return (
     <Button
       variant="contained"
@@ -14,9 +41,9 @@ export const SubmitButton = ({ onClick }: SubmitButtonProps) => {
         marginTop: "10px",
         marginBottom: "10px",
       }}
-      onClick={onClick}
+      onClick={handleClick}
     >
       Submit
     </Button>
-  )
-}
+  );
+};

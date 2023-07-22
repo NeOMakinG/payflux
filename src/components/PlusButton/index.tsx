@@ -23,12 +23,13 @@ export const PlusButton = ({ id }: PlusButtonProps) => {
     {
       icon: <FunctionsIcon />,
       name: "Functions",
-      action: () => setBlockModal({ type: BlockType.FUNCTION, id }),
+      action: () => setBlockModal({ type: BlockType.FUNCTION, id, mode: null }),
     },
     {
       icon: <QuestionMarkIcon />,
       name: "Conditions",
-      action: () => setBlockModal({ type: BlockType.CONDITION, id }),
+      action: () =>
+        setBlockModal({ type: BlockType.CONDITION, id, mode: null }),
     },
   ];
 

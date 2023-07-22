@@ -1,13 +1,17 @@
-import { Box, Typography } from "@mui/material"
-import { useState } from "react"
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { Box, Typography } from "@mui/material";
+import { useState } from "react";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import { SubmitButton } from "./SubmitButton";
 
 export const TimeInterval = () => {
-  const [selectedDateFirst, handleDateChangeFirst] = useState<Date | null>(null);
-  const [selectedDateSecond, handleDateChangeSecond] = useState<Date | null>(null);
+  const [selectedDateFirst, handleDateChangeFirst] = useState<Date | null>(
+    null
+  );
+  const [selectedDateSecond, handleDateChangeSecond] = useState<Date | null>(
+    null
+  );
   return (
-    <Box 
+    <Box
       component="form"
       noValidate
       autoComplete="off"
@@ -19,16 +23,18 @@ export const TimeInterval = () => {
         gap: "10px",
       }}
     >
-      <Box sx={{
-        width: "100%",
-        display: "flex",
-        flexDirection: "rows",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "10px",
-      }}>
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "rows",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "10px",
+        }}
+      >
         <Typography variant="h6">Time Interval :</Typography>
-				<TimePicker
+        <TimePicker
           ampm={false}
           label="24 hours"
           value={selectedDateFirst}
@@ -42,7 +48,7 @@ export const TimeInterval = () => {
           onChange={handleDateChangeSecond}
         />
       </Box>
-      <SubmitButton onClick={() => {}} />
+      <SubmitButton context={{ selectedDateFirst, selectedDateSecond }} />
     </Box>
-	)
-}
+  );
+};
