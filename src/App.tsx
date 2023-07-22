@@ -105,10 +105,6 @@ function App() {
       }
   }, false);
 
-  worker.postMessage({
-      contractCode: contract,
-  });
-
   return (
     <>
     <Contract />

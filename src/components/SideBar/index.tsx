@@ -1,8 +1,24 @@
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { TooltipWrapper } from "../TooltipWrapper";
+import { deployContract } from "../../utils/wallet/connectToWallet";
+import React, { useEffect } from "react";
+import { useContract, PaymasterContractType, useCompileContract } from "../../hooks/useContract";
 
 export function SideBar() {
 	const theme = useTheme();
+  const contract = useContract(PaymasterContractType.DepositPaymaster);
+
+	const { compiledContract, compile, compiling } = useCompileContract(contract);
+
+	useEffect(() => {
+		if (!compiling && compiledContract) {
+			console.log(compiledContract);
+      const bytecode = (compiledContract as any).contracts['contract']['DepositPaymaster'].evm.bytecode.object;
+      deployContract(bytecode);
+		}
+	}, [compiling, compiledContract]);
+
+
 	return (
 		<Box
 			display={"inline-flex"}
@@ -95,7 +111,9 @@ export function SideBar() {
           </IconButton>
         </TooltipWrapper>
         <TooltipWrapper label="Deploy the contract">
-          <IconButton>
+          <IconButton
+            onClick={() => compile()}
+          >
             <svg
               width="21"
               height="21"
