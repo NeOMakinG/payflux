@@ -3,17 +3,22 @@ import { CodeEditor } from "./components/CodeEditor";
 import { Box, useTheme } from "@mui/material";
 import { useRef, useState } from "react";
 import {
-  ImperativePanelHandle,
-  Panel,
-  PanelGroup,
-  PanelResizeHandle,
+	ImperativePanelHandle,
+	Panel,
+	PanelGroup,
+	PanelResizeHandle,
 } from "react-resizable-panels";
 import { Playground } from "./components/Playground";
 
 const snippetsMonkeyPatch = [
+<<<<<<< HEAD
   {
     id: 1,
     value: `//SPDX-License-Identifier: Unlicense
+=======
+	{
+		value: `//SPDX-License-Identifier: Unlicense
+>>>>>>> 044031a (save tree in progress)
 pragma solidity 0.8.16;
 
 import {console} from 'hardhat/console.sol';
@@ -24,10 +29,16 @@ import {IGreeter} from '../interfaces/IGreeter.sol';
 /// @notice You can use this contract for only the most basic tests
 /// @dev This is just a try out
 /// @custom:experimental This is an experimental contract.`,
+<<<<<<< HEAD
   },
   {
     id: 2,
     value: `contract Greeter is IGreeter {
+=======
+	},
+	{
+		value: `contract Greeter is IGreeter {
+>>>>>>> 044031a (save tree in progress)
       string public override greeting;
     
       constructor(string memory _greeting) {
@@ -37,10 +48,16 @@ import {IGreeter} from '../interfaces/IGreeter.sol';
       function greet() external view override returns (string memory _greet) {
         return greeting;
       }`,
+<<<<<<< HEAD
   },
   {
     id: 3,
     value: `  /// @notice Sets greeting that will be used during greet
+=======
+	},
+	{
+		value: `  /// @notice Sets greeting that will be used during greet
+>>>>>>> 044031a (save tree in progress)
     /// @dev Some explanation only defined for devs
     /// @param _greeting The greeting to be used
     /// @return _changedGreet Was greeting changed or nah
@@ -66,14 +83,14 @@ import {IGreeter} from '../interfaces/IGreeter.sol';
       emit GreetingSet(_greeting);
     }
   }`,
-  },
+	},
 ];
 
 function App() {
-  const theme = useTheme();
-  const editorPanel = useRef<ImperativePanelHandle>(null);
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
+	const theme = useTheme();
+	const editorPanel = useRef<ImperativePanelHandle>(null);
+	const [isCollapsed, setIsCollapsed] = useState(false);
+	const [isDragging, setIsDragging] = useState(false);
 
   const handleCollapseClick = () => {
     if (editorPanel.current?.getSize() === 1) {
@@ -82,8 +99,8 @@ function App() {
       return;
     }
 
-    editorPanel.current?.collapse();
-  };
+		editorPanel.current?.collapse();
+	};
 
   return (
     <>
@@ -94,14 +111,15 @@ function App() {
             <Panel id="tree" defaultSize={50} order={1}>
               <Box width="50vw" height="90vh">
                 <Box
-                  marginLeft={"100px"}
-                  width="calc(50vw - 90px)"
-                  height="90vh"
-                  overflow={"auto"}
-                >
-                  <Playground />
-                </Box>
-              </Box>
+							height="90vh"
+							overflow={"auto"}
+							paddingTop={"20px"}
+              position={"relative"}
+						>
+							<Box position={"absolute"}>
+								<Playground />
+							</Box>
+						</Box>
             </Panel>
             <Panel
               ref={editorPanel}
