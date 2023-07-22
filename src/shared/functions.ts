@@ -2,7 +2,6 @@ export enum BlockType {
 	CONDITION = 'Condition',
 	FUNCTION = 'Function',
 	START = "Start",
-	END = "End",
 }
 
 export enum Conditions {
