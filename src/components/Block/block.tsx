@@ -7,16 +7,19 @@ import {
   useTheme,
 } from "@mui/material";
 import { BlockProps } from "./types";
+import { usePayfluxStore } from "../../zustand";
 
 export const Block = ({
   type,
   mode,
   topBar,
   bottomBar,
-
   onClickDelete,
 }: BlockProps) => {
   const theme = useTheme();
+  const { setHoveringMode } = usePayfluxStore((state) => ({
+    setHoveringMode: state.setHoveringMode,
+  }));
 
   const bodyText = mode ?? type;
 
@@ -36,6 +39,8 @@ export const Block = ({
         },
       }}
       className="tf-nc"
+      onMouseEnter={() => setHoveringMode(mode ?? null)}
+      onMouseLeave={() => setHoveringMode(null)}
     >
       {/* CLOSE BTN */}
       {onClickDelete && (
