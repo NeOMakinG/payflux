@@ -87,7 +87,7 @@ const custom: CustomVariables = {
 		large: "30px",
 	},
 	block: {
-		minWidth: "230px",
+		minWidth: "80px",
 		maxWidth: "300px",
 		bodyHeight: "100px",
 		barHeight: "30px",

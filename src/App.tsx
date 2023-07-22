@@ -1,6 +1,7 @@
 import { SideBar } from "./components/SideBar";
 import { CodeEditor } from "./components/CodeEditor";
 import { Grid, useTheme } from "@mui/material";
+import { Playground } from "./components/Playground";
 
 const snippetsMonkeyPatch = [
   {
@@ -59,7 +60,9 @@ function App() {
         <Grid pb={"16px"} item xs={2}>
           <SideBar />
         </Grid>
-        <Grid item xs={5}></Grid>
+        <Grid item xs={5}>
+          <Playground />
+        </Grid>
         <Grid
           item
           xs={5}
