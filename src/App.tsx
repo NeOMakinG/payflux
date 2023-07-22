@@ -8,6 +8,7 @@ import {
   PanelGroup,
   PanelResizeHandle,
 } from "react-resizable-panels";
+import { Playground } from "./components/Playground";
 
 const snippetsMonkeyPatch = [
   {
@@ -84,72 +85,79 @@ function App() {
   };
 
   return (
-    <>
-      <Box height="100vh" marginTop={0} display="flex" alignItems="center">
-        <SideBar />
-        <PanelGroup direction="horizontal">
-          <Panel id="tree" defaultSize={50} order={1}>
-            <Box width="50vw" height="90vh"></Box>
-          </Panel>
-          <Panel
-            ref={editorPanel}
-            id="codeEditor"
-            collapsible={true}
-            defaultSize={50}
-            order={2}
-            collapsedSize={1}
-            onCollapse={setIsCollapsed}
-          >
-            <PanelResizeHandle
-              onDragging={(isDragging) => {
-                setTimeout(() => setIsDragging(isDragging), 500);
-              }}
-            >
-              <Box height="90vh" width="12px" position="absolute">
-                <Box
-                  height="95px"
-                  width="12px"
-                  bgcolor={theme.palette.background.collapse}
-                  borderRadius="0 4px 4px 0"
-                  top="50%"
-                  position="absolute"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                  sx={{
-                    transform: "translateY(-50%)",
-                    cursor: "pointer",
-                    transition: ".25s ease-out",
-                    "&:hover": {
-                      opacity: ".6",
-                    },
-                    "&::after": {
-                      content: '""',
-                      width: 0,
-                      height: 0,
-                      transform: isCollapsed ? "rotate(-180deg)" : "inherit",
-                      borderStyle: "solid",
-                      borderWidth: "4px 0 4px 6px",
-                      borderColor:
-                        "transparent transparent transparent #b0b0b0",
-                    },
-                  }}
-                  onClick={handleCollapseClick}
-                ></Box>
-              </Box>
-            </PanelResizeHandle>
-            <Box
-              p={theme.custom.padding.large}
-              borderRadius={`${theme.custom.borderRadius.default} 0 0 ${theme.custom.borderRadius.default}`}
-              bgcolor={theme.palette.background.sidebar}
-            >
-              <CodeEditor highlightedIndex={1} snippets={snippetsMonkeyPatch} />
-            </Box>
-          </Panel>
-        </PanelGroup>
-      </Box>
-    </>
-  );
+		<>
+			<Box height="100vh" marginTop={0} display="flex" alignItems="center">
+				<SideBar />
+				<PanelGroup direction="horizontal">
+					<Panel id="tree" defaultSize={50} order={1}>
+						<Box
+							marginLeft={"100px"}
+							width="calc(50vw - 90px)"
+							height="90vh"
+							overflow={"auto"}
+						>
+							<Playground />
+						</Box>
+					</Panel>
+					<Panel
+						ref={editorPanel}
+						id="codeEditor"
+						collapsible={true}
+						defaultSize={50}
+						order={2}
+						collapsedSize={1}
+						onCollapse={setIsCollapsed}
+					>
+						<PanelResizeHandle
+							onDragging={(isDragging) => {
+								setTimeout(() => setIsDragging(isDragging), 500);
+							}}
+						>
+							<Box height="90vh" width="12px" position="absolute">
+								<Box
+									height="95px"
+									width="12px"
+									bgcolor={theme.palette.background.collapse}
+									borderRadius="0 4px 4px 0"
+									top="50%"
+									position="absolute"
+									display="flex"
+									alignItems="center"
+									justifyContent="center"
+									sx={{
+										transform: "translateY(-50%)",
+										cursor: "pointer",
+										transition: ".25s ease-out",
+										"&:hover": {
+											opacity: ".6",
+										},
+										"&::after": {
+											content: '""',
+											width: 0,
+											height: 0,
+											transform: isCollapsed ? "rotate(-180deg)" : "inherit",
+											borderStyle: "solid",
+											borderWidth: "4px 0 4px 6px",
+											borderColor:
+												"transparent transparent transparent #b0b0b0",
+										},
+									}}
+									onClick={handleCollapseClick}
+								></Box>
+							</Box>
+						</PanelResizeHandle>
+						<Box
+							p={theme.custom.padding.large}
+							borderRadius={`${theme.custom.borderRadius.default} 0 0 ${theme.custom.borderRadius.default}`}
+							bgcolor={theme.palette.background.sidebar}
+						>
+							<CodeEditor highlightedIndex={1} snippets={snippetsMonkeyPatch} />
+						</Box>
+					</Panel>
+				</PanelGroup>
+			</Box>
+		</>
+	);
 }
 
 export default App;
