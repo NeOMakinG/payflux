@@ -1,12 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
+import App from "./App";
+import "./index.css";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import { theme } from "./theme.ts";
+import { theme } from "./theme";
+import reportWebVitals from "./reportWebVitals";
 
 import "@fontsource/inconsolata"; // Defaults to weight 400
 import "@fontsource/inconsolata/400.css"; // Specify weight
-
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -16,3 +17,5 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     </ThemeProvider>
   </React.StrictMode>
 );
+
+reportWebVitals();
