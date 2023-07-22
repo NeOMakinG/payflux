@@ -10,14 +10,21 @@ export const WhitelistedAddresses = () => {
       noValidate
       autoComplete="off"
       sx={{
+        width: "100%",
         display: "flex",
-        flexDirection: "row",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "10px",
       }}
     >
       <Box
         sx={{
+          width: "100%",
           display: "flex",
-          flexDirection: "row",
+          flexDirection: "rows",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "10px",
         }}
       >
         <Typography variant="h6">Whitelisted Addresses :</Typography>
@@ -28,6 +35,9 @@ export const WhitelistedAddresses = () => {
           placeholder="Enter your newline-separated whitelisted addresses here."
           value={text}
           onChange={(e) => setText(e.target.value)}
+          sx={{
+            width: "50%",
+          }}
         />
       </Box>
       <SubmitButton onClick={() => {}} />
