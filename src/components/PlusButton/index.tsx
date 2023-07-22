@@ -1,26 +1,44 @@
-import { SpeedDial, SpeedDialAction, SpeedDialIcon, useTheme } from "@mui/material"
-import FunctionsIcon from '@mui/icons-material/Functions';
-import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
+import {
+  SpeedDial,
+  SpeedDialAction,
+  SpeedDialIcon,
+  useTheme,
+} from "@mui/material";
+import FunctionsIcon from "@mui/icons-material/Functions";
+import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import { usePayfluxStore } from "../../zustand";
 import { PlusButtonProps } from "./types";
 import { BlockType } from "../../shared/functions";
 
-export const PlusButton = ({parentId}: PlusButtonProps) => {
+export const PlusButton = ({ id }: PlusButtonProps) => {
   const theme = useTheme();
-  const { blockIdToProps, addChild, setBlockIdToProps }= usePayfluxStore(state => ({ blockIdToProps: state.blockIdToProps, addChild: state.addChild, setBlockIdToProps: state.setBlockIdToProps }));
+  const { setBlockModal } = usePayfluxStore((state) => ({
+    blockIdToProps: state.blockIdToProps,
+    addChild: state.addChild,
+    setBlockIdToProps: state.setBlockIdToProps,
+    setBlockModal: state.setBlockModal,
+  }));
 
-  const addBlock = (type: BlockType) => {
-    const newId = (Object.keys(blockIdToProps).length + 1).toString();
-    return () => {
-      setBlockIdToProps(newId, { type });
-      addChild(parentId, newId);
-    }
-  }
+  // const addBlock = (type: BlockType) => {
+  //   const newId = (Object.keys(blockIdToProps).length + 1).toString();
+  //   return () => {
+  //     setBlockIdToProps(newId, { type });
+  //     addChild(id, newId);
+  //   };
+  // };
 
   const actions = [
-    { icon: <FunctionsIcon />, name: 'Functions', action: addBlock(BlockType.FUNCTION) },
-    { icon: <QuestionMarkIcon />, name: 'Conditions', action: addBlock(BlockType.CONDITION) },
-  ]
+    {
+      icon: <FunctionsIcon />,
+      name: "Functions",
+      action: () => setBlockModal({ type: BlockType.FUNCTION, id }),
+    },
+    {
+      icon: <QuestionMarkIcon />,
+      name: "Conditions",
+      action: () => setBlockModal({ type: BlockType.CONDITION, id }),
+    },
+  ];
 
   return (
     <SpeedDial
@@ -29,7 +47,7 @@ export const PlusButton = ({parentId}: PlusButtonProps) => {
         sx: {
           backgroundImage: theme.palette.gradient.red,
           color: theme.palette.text.primary,
-        }
+        },
       }}
       direction="down"
       icon={<SpeedDialIcon />}
@@ -43,5 +61,5 @@ export const PlusButton = ({parentId}: PlusButtonProps) => {
         />
       ))}
     </SpeedDial>
-  )
-}
+  );
+};
