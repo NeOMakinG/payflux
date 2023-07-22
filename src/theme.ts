@@ -52,9 +52,9 @@ declare module "@mui/material/styles" {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface Palette extends ColorsObject {}
+  interface Palette extends ColorsObject { }
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface PaletteOptions extends ColorsObject {}
+  interface PaletteOptions extends ColorsObject { }
 }
 
 const palette: PaletteOptions = {
@@ -97,9 +97,9 @@ const custom: CustomVariables = {
 
 export const theme = createTheme({
   palette: {
-		...palette,
-		mode: 'dark'
-	},
+    ...palette,
+    mode: 'dark'
+  },
   custom,
   typography: {
     fontFamily: "Inconsolata",
