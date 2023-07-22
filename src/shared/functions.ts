@@ -1,16 +1,16 @@
 export enum BlockType {
-    CONDITION = 'CONDITION',
-    FUNCTION = 'FUNCTION',
+	CONDITION = 'Condition',
+	FUNCTION = 'Function',
 }
 
 export enum Conditions {
-    IF_ELSE = 'IF_ELSE',
-    SWITCH = 'SWITCH',
+	IF_ELSE = 'IF_ELSE',
+	SWITCH = 'SWITCH',
 }
 
 export enum Functions {
-    ADD = 'ADD',
-    SUBTRACT = 'SUBTRACT',
-    MULTIPLY = 'MULTIPLY',
-    DIVIDE = 'DIVIDE',
+	ADD = 'ADD',
+	SUBTRACT = 'SUBTRACT',
+	MULTIPLY = 'MULTIPLY',
+	DIVIDE = 'DIVIDE',
 }

@@ -1,13 +1,16 @@
-import { SideBar } from "./components/SideBar";
-import { CodeEditor } from "./components/CodeEditor";
+
+import { Box } from "@mui/material";
+import { Block } from "./components/Block/block";
+import { BlockType, Conditions, Functions } from "./shared/functions";
 
 function App() {
-  return (
-    <>
-      <CodeEditor />
-      <SideBar />
-    </>
-  );
+	return (
+		<Box sx={{display: "flex", gap: "10px", alignItems: "center"}}>
+			<Block type={BlockType.FUNCTION} content={{ name: Functions.ADD, context: undefined }} topBar={{ text: "Case: 1" }} dot={"both"}/>
+			<Block type={BlockType.CONDITION} content={{ name: Conditions.SWITCH, context: undefined }} bottomBar={{ text: "Switch: var" }} />
+			<Block type={BlockType.FUNCTION} dot={"both"}/>
+		</Box>
+	);
 }
 
 export default App;
