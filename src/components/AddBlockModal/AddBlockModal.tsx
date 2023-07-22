@@ -12,33 +12,36 @@ const blockValuesByType = {
   [BlockType.FUNCTION]: Functions,
 } as Record<BlockType, typeof Conditions | typeof Functions>;
 
+type BlockModal = {
+  id: string;
+  type: BlockType;
+};
+
 export function AddBlockModal(props: FormModalProps) {
   const {
     selectedBlockModal,
     blockIdToProps,
     setBlockIdToProps,
-    addChild,
     setBlockModal,
+    addPlus,
   } = usePayfluxStore();
 
   if (!selectedBlockModal) return null;
-
-  const addBlock = (type: BlockType, mode: Conditions | Functions) => {
-    const newId = (Object.keys(blockIdToProps).length + 1).toString();
-    setBlockIdToProps(newId, { type, mode });
-    if (type === BlockType.CONDITION) {
-      addChild(selectedBlockModal.id, newId);
-    }
-    addChild(selectedBlockModal.id, newId);
-  };
 
   const handleClose = () => {
     setBlockModal(null);
   };
 
-  const handleBlockClick = (type: BlockType, mode: Conditions | Functions) => {
+  const handleBlockClick = (blockModal: BlockModal, mode: Conditions | Functions) => {
+    const { id, type } = blockModal;
     if (!blocksByMode[mode]) {
-      addBlock(type, mode);
+      const firstId = (Object.keys(blockIdToProps).length).toString();
+      addPlus(id, firstId);
+      if (type === BlockType.CONDITION) {
+        const secondId = (Object.keys(blockIdToProps).length + 1).toString();
+        addPlus(selectedBlockModal.id, secondId);
+      }
+      setBlockIdToProps(id, { type, mode });
       setBlockModal(null);
       return;
     }
@@ -55,7 +58,7 @@ export function AddBlockModal(props: FormModalProps) {
           ).map((block: Conditions | Functions) => (
             <BlockPresenter
               bodyText={block}
-              onClick={() => handleBlockClick(selectedBlockModal.type, block)}
+              onClick={() => handleBlockClick(selectedBlockModal, block)}
             />
           ))}
         {selectedBlockModal.mode && blocksByMode[selectedBlockModal.mode]}

@@ -1,7 +1,6 @@
 import { Box, useTheme } from "@mui/material";
 import { BlocksStruct } from "../../shared/structure";
 import { BlockGenerator } from "./BlockGenerator";
-import { PlusButton } from "../PlusButton";
 import { Theme } from "@mui/material";
 import "treeflex/dist/css/treeflex.css";
 import "./custom-treeflex.css";
@@ -32,21 +31,6 @@ function renderBlocks(struct: BlocksStruct, theme: Theme) {
           }}
           component={"ul"}
         >
-          {!struct.children && (
-            <Box
-              component={"li"}
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Box className="tf-nc">
-                <PlusButton id={struct.id} />
-              </Box>
-            </Box>
-          )}
           {Array.isArray(struct.children) &&
             struct.children.map((block) => {
               return renderBlocks(block, theme);
