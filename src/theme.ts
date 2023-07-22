@@ -96,7 +96,10 @@ const custom: CustomVariables = {
 };
 
 export const theme = createTheme({
-  palette,
+  palette: {
+		...palette,
+		mode: 'dark'
+	},
   custom,
   typography: {
     fontFamily: "Inconsolata",
