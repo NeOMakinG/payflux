@@ -13,4 +13,5 @@ export type BlockProps = {
 		text: string;
 	};
 	dot?: "top" | "bottom" | "both";
+	onClickDelete?: () => void;
 }

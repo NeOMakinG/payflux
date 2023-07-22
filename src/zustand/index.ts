@@ -48,24 +48,30 @@ export const usePayfluxStore = create<UsePayfluxStoreType>()((set) => ({
     }));
   },
   removeBlock: (blockId: BlockId) => {
-    // recusively search for the blockId and remove it
-    const searchAndRemove = (block: BlocksStruct) => {
-      if (block.id === blockId) {
-        return undefined;
-      }
-      if (block.children) {
-        block.children = block.children
-          .map(searchAndRemove)
-          .filter((block) => block !== undefined) as BlocksStruct[];
-      }
-      return block;
-    };
-    set((state) => ({
-      blockStructure: JSON.parse(
-        JSON.stringify(searchAndRemove(state.blockStructure))
-      ),
-    }));
-  },
+		// recusively search for the blockId and remove it
+		const searchAndRemove = (block: BlocksStruct, parent?: BlocksStruct) => {
+			if (block.id === blockId) {
+				if (parent?.children) {
+					if (parent?.children?.length === 1) {
+						delete parent.children;
+					} else {
+						parent.children = parent.children.filter(
+							(child) => child.id !== blockId
+						);
+					}
+				}
+			}
+			if (block.children) {
+				block.children.forEach((child) => searchAndRemove(child, block));
+			}
+			return block;
+		};
+		set((state) => ({
+			blockStructure: JSON.parse(
+				JSON.stringify(searchAndRemove(state.blockStructure))
+			),
+		}));
+	},
   selectedBlockModal: null,
   setBlockModal: (selectedBlockModal: SelectedBlockModal) => {
     set(() => ({
