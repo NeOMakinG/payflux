@@ -96,16 +96,17 @@ export const Block = ({ type, content, topBar, bottomBar, dot }: BlockProps) => 
 						flexDirection: "column",
 						justifyContent: "center",
 						alignItems: "center",
-						padding: "10px 20px",
+						padding: "20px 20px",
 					}}
 				>
 					<Typography
 						variant="h6"
 						style={{
-							fontSize: "12px",
+							fontSize: "14px",
 							background: theme.palette.gradient.red,
 							WebkitBackgroundClip: "text",
 							WebkitTextFillColor: "transparent",
+							fontWeight: "bold"
 						}}
 					>
 						{bodyText}

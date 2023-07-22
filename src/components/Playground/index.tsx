@@ -51,56 +51,53 @@ const map2: BlocksStruct = {
 	],
 };
 function renderBlocks(struct: BlocksStruct, theme: Theme) {
-	if (!struct) {
-		return (
-			<Box
-				component={"li"}
-				sx={{
-					display: "flex",
-					flexDirection: "column",
-					justifyContent: "center",
-					alignItems: "center",
-				}}
-			>
-				<PlusButton />
-			</Box>
-		);
-	}
-
-	if (struct) {
-		return (
-			<Box
-				sx={{
-					display: "flex",
-					flexDirection: "column",
-					justifyContent: "center",
-					alignItems: "center",
-				}}
-				component={"li"}
-			>
-				<BlockGenerator id={struct.id} />
-				{((Array.isArray(struct.children) && struct.children.length > 0) ||
-					!struct.children) && (
-					<Box
-						sx={{
-							display: "flex",
-							flexDirection: "row",
-							justifyContent: "center",
-							alignItems: "flex-start",
-							position: "relative",
-						}}
-						component={"ul"}
-					>
-						{!struct.children && <PlusButton />}
-						{Array.isArray(struct.children) &&
-							struct.children.map((block) => {
-								return renderBlocks(block, theme);
-							})}
-					</Box>
-				)}
-			</Box>
-		);
-	}
+	return (
+		<Box
+			sx={{
+				display: "flex",
+				flexDirection: "column",
+				justifyContent: "center",
+				alignItems: "center",
+			}}
+			component={"li"}
+		>
+			<BlockGenerator id={struct.id} />
+			{((Array.isArray(struct.children) && struct.children.length > 0) ||
+				!struct.children) && (
+				<Box
+					sx={{
+						display: "flex",
+						flexDirection: "row",
+						justifyContent: "center",
+						alignItems: "flex-start",
+						position: "relative",
+					}}
+					component={"ul"}
+				>
+					{!struct.children && (
+						<Box
+							component={"li"}
+							sx={{
+								display: "flex",
+								flexDirection: "column",
+								justifyContent: "center",
+								alignItems: "center",
+							}}
+						>
+							<Box className="tf-nc">
+								<PlusButton />
+							</Box>
+			
+						</Box>
+					)}
+					{Array.isArray(struct.children) &&
+						struct.children.map((block) => {
+							return renderBlocks(block, theme);
+						})}
+				</Box>
+			)}
+		</Box>
+	);
 }
 
 export const Playground = () => {
