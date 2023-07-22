@@ -10,6 +10,9 @@ type ColorsObject = {
 		red: string;
 		blue: string;
 	};
+  border: {
+    light: string;
+  }
 };
 
 type CustomVariables = {
@@ -64,6 +67,9 @@ const palette: PaletteOptions = {
 	},
 	text: {
 		primary: "#ffffff",
+	},
+	border: {
+		light: "#4A4A4A",
 	},
 	gradient: {
 		red: "linear-gradient(30deg, #F20486, #FF6068)",
