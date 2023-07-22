@@ -13,9 +13,6 @@ import { BlockType } from "../../shared/functions";
 export const PlusButton = ({ id }: PlusButtonProps) => {
   const theme = useTheme();
   const { setBlockModal } = usePayfluxStore((state) => ({
-    blockIdToProps: state.blockIdToProps,
-    addChild: state.addChild,
-    setBlockIdToProps: state.setBlockIdToProps,
     setBlockModal: state.setBlockModal,
   }));
 
