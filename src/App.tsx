@@ -9,6 +9,7 @@ import {
 	PanelResizeHandle,
 } from "react-resizable-panels";
 import { Playground } from "./components/Playground";
+import { usePayfluxStore } from "./zustand";
 
 const snippetsMonkeyPatch = [
   {
@@ -71,6 +72,7 @@ import {IGreeter} from '../interfaces/IGreeter.sol';
 
 function App() {
 	const theme = useTheme();
+  const blockStructure = usePayfluxStore(state => state.blockStructure);
 	const editorPanel = useRef<ImperativePanelHandle>(null);
 	const [isCollapsed, setIsCollapsed] = useState(false);
 	const [isDragging, setIsDragging] = useState(false);
@@ -99,7 +101,7 @@ function App() {
               position={"relative"}
 						>
 							<Box position={"absolute"}>
-								<Playground />
+								<Playground blockStructure={blockStructure}/>
 							</Box>
 						</Box>
             </Panel>

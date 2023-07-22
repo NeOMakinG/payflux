@@ -6,50 +6,6 @@ import { Theme } from "@mui/material";
 import "treeflex/dist/css/treeflex.css";
 import "./custom-treeflex.css";
 
-const map2: BlocksStruct = {
-	id: "start",
-	children: [
-		{
-			id: "1",
-			children: [
-				{
-					id: "1.2",
-					children: [
-						{
-							id: "1.2.1",
-							children: [],
-						},
-						{
-							id: "1.2.2",
-							children: [],
-						},
-						{
-							id: "1.2.3",
-							children: [
-								{
-									id: "1.2.3.4",
-									children: [],
-								},
-							],
-						},
-					],
-				},
-				{
-					id: "1.2.3",
-					children: [],
-				},
-			],
-		},
-		{
-			id: "2.1",
-			children: [
-				{
-					id: "2.1.1",
-				},
-			],
-		},
-	],
-};
 function renderBlocks(struct: BlocksStruct, theme: Theme) {
 	return (
 		<Box
@@ -85,7 +41,7 @@ function renderBlocks(struct: BlocksStruct, theme: Theme) {
 							}}
 						>
 							<Box className="tf-nc">
-								<PlusButton />
+                <PlusButton parentId={struct.id}/>
 							</Box>
 			
 						</Box>
@@ -100,14 +56,17 @@ function renderBlocks(struct: BlocksStruct, theme: Theme) {
 	);
 }
 
-export const Playground = () => {
+type PlaygroundProps = {
+  blockStructure: BlocksStruct;
+}
+
+export const Playground = ({blockStructure}: PlaygroundProps) => {
 	const theme = useTheme();
-	const structure = map2;
 
 	return (
 		<Box className="tf-tree tf-gap-lg">
-			{structure && (
-				<Box component={"ul"}>{renderBlocks(structure, theme)}</Box>
+			{blockStructure && (
+				<Box component={"ul"}>{renderBlocks(blockStructure, theme)}</Box>
 			)}
 		</Box>
 	);

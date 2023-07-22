@@ -7,9 +7,7 @@ import { BlockType } from "../../shared/functions";
 
 export const PlusButton = ({parentId}: PlusButtonProps) => {
   const theme = useTheme();
-  const blockIdToProps = usePayfluxStore((state) => state.blockIdToProps);
-  const setBlockIdToProps = usePayfluxStore((state) => state.setBlockIdToProps);
-  const addChild = usePayfluxStore((state) => state.addChild);
+  const { blockIdToProps, addChild, setBlockIdToProps }= usePayfluxStore(state => ({ blockIdToProps: state.blockIdToProps, addChild: state.addChild, setBlockIdToProps: state.setBlockIdToProps }));
 
   const addBlock = (type: BlockType) => {
     const newId = (Object.keys(blockIdToProps).length + 1).toString();

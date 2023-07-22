@@ -4,7 +4,7 @@ import { usePayfluxStore } from "../../zustand";
 import { Block } from "../Block/block"
 
 export const BlockGenerator = ({ id }: { id: BlockId }) => {
-  const blockIdToProps = usePayfluxStore((state) => state.blockIdToProps);
+  const blockIdToProps = usePayfluxStore(state => state.blockIdToProps);
   const props = blockIdToProps[id];
 
 	if (id === "start") return (
