@@ -4,6 +4,8 @@ export function SideBar() {
   const theme = useTheme();
   return (
     <Box
+      position={"fixed"}
+      top={"50%"}
       left={"0"}
       display={"inline-flex"}
       flexDirection={"column"}
@@ -11,6 +13,9 @@ export function SideBar() {
       padding={"20px"}
       height={"95vh"}
       borderRadius={`0 ${theme.custom.borderRadius.default} ${theme.custom.borderRadius.default} 0`}
+      sx={{
+        transform: "translateY(-50%)",
+      }}
       border={`2px solid #474747`}
       borderLeft={"none"}
     >
