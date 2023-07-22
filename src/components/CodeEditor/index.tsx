@@ -3,7 +3,8 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import vscDarkPlus from "react-syntax-highlighter/dist/esm/styles/prism/vsc-dark-plus";
 
 export type Snippet = {
-  value: string;
+  id: string;
+  value:  string;
 };
 
 type CodeEditorProps = {
