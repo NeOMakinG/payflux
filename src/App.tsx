@@ -95,7 +95,7 @@ function App() {
 	return (
 		<>
 			<FormModal
-				open={modalStatus["delete-block-form"]?.status}
+				open={modalStatus["delete-block-form"]?.status || false}
 				onClose={() => {
 					closeModal("delete-block-form");
 				}}

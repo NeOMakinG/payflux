@@ -19,7 +19,7 @@ type UsePayfluxStoreType = {
 };
 
 export const usePayfluxStore = create<UsePayfluxStoreType>()((set) => ({
-  blockIdToProps: { start: { type: BlockType.START } },
+  blockIdToProps: { start: { type: BlockType.START,  } },
   setBlockIdToProps: (blockId: BlockId, props: BlockProps) =>
     set((state) => ({
       blockIdToProps: { ...state.blockIdToProps, [blockId]: props },
