@@ -1,0 +1,9 @@
+.tf-nc {
+  padding: 0!important;
+  border: none !important;
+}
+
+.tf-tree .tf-nc:before, .tf-tree .tf-nc:after, .tf-tree li li:before {
+  border-color:  #F20486;
+  border-width: 2px;
+}

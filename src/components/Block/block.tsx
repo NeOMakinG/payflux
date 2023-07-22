@@ -16,6 +16,7 @@ export const Block = ({ type, content, topBar, bottomBar, dot }: BlockProps) => 
 				justifyContent: "center",
 				alignItems: "center",
 			}}
+			className="tf-nc"
 		>
 			{dot && (dot === "top" || dot === "both") && (
 				<Box
