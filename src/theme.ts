@@ -27,6 +27,10 @@ type CustomVariables = {
 			bar: string;
 		};
 	};
+	padding: {
+		default: string;
+		large: string;
+	};
 };
 
 declare module "@mui/material/styles" {
@@ -56,6 +60,7 @@ const palette: PaletteOptions = {
 		default: "#282828",
 		dark: "#212121",
 		sidebar: "#2D2D2D",
+		paper: "#343434",
 	},
 	text: {
 		primary: "#ffffff",
@@ -70,6 +75,10 @@ const custom: CustomVariables = {
 	borderRadius: {
 		default: "23px",
 		small: "8px",
+	},
+	padding: {
+		default: "12px",
+		large: "30px",
 	},
 	block: {
 		minWidth: "230px",
