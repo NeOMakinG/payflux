@@ -18,7 +18,6 @@ function renderBlocks(struct: BlocksStruct, theme: Theme) {
         alignItems: "center",
       }}
       component={"li"}
-      key={struct.id}
     >
       <BlockGenerator id={struct.id} />
       {((Array.isArray(struct.children) && struct.children.length > 0) ||
@@ -77,7 +76,6 @@ export const Playground = ({ blockStructure }: PlaygroundProps) => {
       <AddBlockModal
         onClose={() => setBlockModal(null)}
         open={!!selectedBlockModal}
-        blockId={blockStructure.id}
       >
         <></>
       </AddBlockModal>

@@ -7,27 +7,20 @@ import { FormModalProps } from "../FormModal/types";
 import { useState } from "react";
 import { BlockPresenter } from "./BlockPresenter";
 import { blocksByMode } from "./constants";
-import { BlockId } from "../../shared/structure";
 
 const blockValuesByType = {
   [BlockType.CONDITION]: Conditions,
   [BlockType.FUNCTION]: Functions,
 } as Record<BlockType, typeof Conditions | typeof Functions>;
 
-type AddBlockModalProps = {
-  blockId: BlockId;
-} & FormModalProps;
-
-export function AddBlockModal(props: AddBlockModalProps) {
+export function AddBlockModal(props: FormModalProps) {
   const {
     selectedBlockModal,
     blockIdToProps,
     setBlockIdToProps,
     addChild,
     setBlockModal,
-    blockStructure,
   } = usePayfluxStore();
-  console.log(blockStructure);
   const [selectedBlock, setSelectedBlock] = useState<
     Conditions | Functions | null
   >(null);
@@ -36,11 +29,11 @@ export function AddBlockModal(props: AddBlockModalProps) {
 
   const addBlock = (type: BlockType, mode: Conditions | Functions) => {
     const newId = (Object.keys(blockIdToProps).length + 1).toString();
-    console.log(props.blockId, newId, type, mode);
-    return () => {
-      setBlockIdToProps(newId, { type, mode });
-      addChild(props.blockId, newId);
-    };
+    setBlockIdToProps(newId, { type, mode });
+    if (type === BlockType.CONDITION) {
+      addChild(selectedBlockModal.id, newId);
+    }
+    addChild(selectedBlockModal.id, newId);
   };
 
   const handleClose = () => {

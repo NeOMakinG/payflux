@@ -1,4 +1,4 @@
-import { BlockType, Functions } from "../../shared/functions";
+import { BlockType } from "../../shared/functions";
 import { BlockId } from "../../shared/structure";
 import { usePayfluxStore } from "../../zustand";
 import { useModal } from "../../zustand/modal";
@@ -14,7 +14,7 @@ export const BlockGenerator = ({ id }: { id: BlockId }) => {
     <Block
       {...props}
       onClickDelete={() => openModal("delete-block-form", { id })}
-      mode={`${props.type}-${id}` as Functions}
+      mode={props.mode}
     />
   );
 };
