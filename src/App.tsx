@@ -3,10 +3,10 @@ import { CodeEditor } from "./components/CodeEditor";
 import { Box, useTheme } from "@mui/material";
 import { useRef, useState } from "react";
 import {
-  ImperativePanelHandle,
-  Panel,
-  PanelGroup,
-  PanelResizeHandle,
+	ImperativePanelHandle,
+	Panel,
+	PanelGroup,
+	PanelResizeHandle,
 } from "react-resizable-panels";
 import { Playground } from "./components/Playground";
 
@@ -66,14 +66,14 @@ import {IGreeter} from '../interfaces/IGreeter.sol';
       emit GreetingSet(_greeting);
     }
   }`,
-  },
+	},
 ];
 
 function App() {
-  const theme = useTheme();
-  const editorPanel = useRef<ImperativePanelHandle>(null);
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
+	const theme = useTheme();
+	const editorPanel = useRef<ImperativePanelHandle>(null);
+	const [isCollapsed, setIsCollapsed] = useState(false);
+	const [isDragging, setIsDragging] = useState(false);
 
   const handleCollapseClick = () => {
     if (editorPanel.current?.getSize() === 1) {
@@ -82,8 +82,8 @@ function App() {
       return;
     }
 
-    editorPanel.current?.collapse();
-  };
+		editorPanel.current?.collapse();
+	};
 
   return (
     <>
@@ -92,16 +92,16 @@ function App() {
         <PanelGroup direction="horizontal">
           <Box display="flex" alignItems="center" width="100%">
             <Panel id="tree" defaultSize={50} order={1}>
-              <Box width="50vw" height="90vh">
-                <Box
-                  marginLeft={"100px"}
-                  width="calc(50vw - 90px)"
-                  height="90vh"
-                  overflow={"auto"}
-                >
-                  <Playground />
-                </Box>
-              </Box>
+              <Box
+							height="90vh"
+							overflow={"auto"}
+							paddingTop={"20px"}
+              position={"relative"}
+						>
+							<Box position={"absolute"}>
+								<Playground />
+							</Box>
+						</Box>
             </Panel>
             <Panel
               ref={editorPanel}
