@@ -1,68 +1,88 @@
 import { Box } from "@mui/material";
-import { BlockId, BlocksStruct } from "../../shared/structure"
+import { BlocksStruct } from "../../shared/structure";
 import { BlockGenerator } from "./BlockGenerator";
+import { PlusButton } from "../PlusButton";
 
-const map = {"start": {
-  1: {2: "end-1"},
-  3: { 4 : {5: "end-2",
-            6: {7: null}}},
-  8: null
-}} as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
-const recursiveGenerator = (id: BlockId, struct: BlocksStruct) => {
-  const children = struct[id] as BlocksStruct | string | null;
+const map2: BlocksStruct = 
+	{
+		id: "start",
+		children: [
+			{
+				id: "1",
+				children: [
+          {
+            id: "1.2",
+            children: [
+              {
+                id: "1.2.1",
+                children: []
+              },
+              {
+                id: "1.2.2",
+                children: []
+              }, 
+              {
+                id: "1.2.3",
+                children: []
+              }
+          
+            ],
+          },
+          {
+            id: "1.2.3",
+            children: []
+          }
+        ],
+			},
+      {
+        id: "2.1",
+        children: [
+          {
+            id: "2.1.1",
+          }
+        ]
+      }
+		],
+	}
+;
 
-  console.log("children", children, typeof children)
-  if (children instanceof Object) {
-    return (
-      <Box sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-      }}>
-        <BlockGenerator id={id} />
-        <Box sx={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "flex-start",
-          padding: "20px",
-        }}>
-          {Object.keys(children).map((blockId) => {
-            console.log(blockId)
-            return recursiveGenerator(blockId, children);
-          })}
-        </Box>
-      </Box>
-    );
-  } else {
-    return (
-      <Box sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "flex-start",
-        padding: "20px",
-        rowGap: "20px",
-      }}>
-        <BlockGenerator id={id} />
-        <BlockGenerator id={children as BlockId} />
-      </Box>
-    );
-  }
+function renderBlocks(struct: BlocksStruct) {
+	if (!struct) {
+		return <PlusButton />;
+	}
+
+	if (struct) {
+		return (
+			<Box
+				sx={{
+					display: "flex",
+					flexDirection: "column",
+					justifyContent: "center",
+					alignItems: "center",
+				}}
+			>
+				<BlockGenerator id={struct.id} />
+				<Box
+					sx={{
+						display: "flex",
+						flexDirection: "row",
+						justifyContent: "center",
+						alignItems: "flex-start",
+						padding: "20px",
+					}}
+				>
+          {!struct.children && <PlusButton />}
+					{Array.isArray(struct.children) && struct.children.map((block) => {
+						return renderBlocks(block);
+					})}
+				</Box>
+			</Box>
+		);
+	}
 }
 
 export const Playground = () => {
-  const structure = map;
-  return (
-    <Box sx={{
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-    }}>
-      {recursiveGenerator("start", structure)}
-    </Box>
-  )
-}
+	const structure = map2;
+	return renderBlocks(structure);
+};
