@@ -69,6 +69,8 @@ import {IGreeter} from '../interfaces/IGreeter.sol';
   }`,
 	},
 ];
+import "./App.css";
+import Contract from "./Contract";
 
 function App() {
 	const theme = useTheme();
@@ -110,6 +112,7 @@ function App() {
 
   return (
     <>
+    <Contract />
       <Box height="100vh" marginTop={0} display="flex" alignItems="center">
         <SideBar />
         <PanelGroup direction="horizontal">
