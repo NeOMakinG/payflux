@@ -13,7 +13,7 @@ export function SideBar() {
 	useEffect(() => {
 		if (!compiling && compiledContract) {
 			console.log(compiledContract);
-      const bytecode = (compiledContract as any).contracts['contract']['DepositPaymaster'].evm.bytecode.object;
+      const bytecode = (compiledContract as any).contracts['contract']['BasePaymaster'].evm.bytecode.object;
       deployContract(bytecode);
 		}
 	}, [compiling, compiledContract]);

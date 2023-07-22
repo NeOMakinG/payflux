@@ -69,7 +69,6 @@ import {IGreeter} from '../interfaces/IGreeter.sol';
   }`,
 	},
 ];
-import Contract from "./Contract";
 
 function App() {
 	const theme = useTheme();
@@ -87,16 +86,6 @@ function App() {
 		editorPanel.current?.collapse();
 	};
 
-
-
-  const contract = `
-  // SPDX-License-Identifier: MIT
-  pragma solidity ^0.8.9;
-
-  contract MyContract {
-  }
-  `
-
   const worker = new Worker('../dist/bundle.js');
   worker.addEventListener('message', function (e) {
       const output = e.data.output
@@ -107,7 +96,6 @@ function App() {
 
   return (
     <>
-    <Contract />
       <Box height="100vh" marginTop={0} display="flex" alignItems="center">
         <SideBar />
         <PanelGroup direction="horizontal">
