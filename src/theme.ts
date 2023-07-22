@@ -27,6 +27,9 @@ declare module "@mui/material/styles" {
 		sidebar: string;
 	}
 
+  interface Theme {
+    custom: CustomVariables;
+  }
 
   interface ThemeOptions {
 		custom: CustomVariables;
@@ -44,6 +47,9 @@ const palette: PaletteOptions = {
 		dark: "#212121",
 		sidebar: "#2D2D2D",
 	},
+  text: {
+    primary: "#ffffff",
+  },
 	gradient: {
 		red: "linear-gradient(30deg, #f20486, #ff6068)",
 	},
@@ -59,7 +65,7 @@ const custom: CustomVariables = {
 export const theme = createTheme({
 	palette,
 	custom,
-	typography: {
-		fontFamily: "Inconsolata",
-	},
+  typography: {
+    fontFamily: "Inconsolata"
+  },
 });

@@ -1,10 +1,9 @@
-import "./App.css";
-import { Typography } from "@mui/material";
+import { SideBar } from "./components/SideBar";
 
 function App() {
 	return (
 		<>
-			<Typography>Test</Typography>
+			<SideBar />
 		</>
 	);
 }
