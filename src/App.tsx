@@ -11,14 +11,9 @@ import {
 import { Playground } from "./components/Playground";
 
 const snippetsMonkeyPatch = [
-<<<<<<< HEAD
   {
     id: 1,
     value: `//SPDX-License-Identifier: Unlicense
-=======
-	{
-		value: `//SPDX-License-Identifier: Unlicense
->>>>>>> 044031a (save tree in progress)
 pragma solidity 0.8.16;
 
 import {console} from 'hardhat/console.sol';
@@ -29,16 +24,10 @@ import {IGreeter} from '../interfaces/IGreeter.sol';
 /// @notice You can use this contract for only the most basic tests
 /// @dev This is just a try out
 /// @custom:experimental This is an experimental contract.`,
-<<<<<<< HEAD
   },
   {
     id: 2,
     value: `contract Greeter is IGreeter {
-=======
-	},
-	{
-		value: `contract Greeter is IGreeter {
->>>>>>> 044031a (save tree in progress)
       string public override greeting;
     
       constructor(string memory _greeting) {
@@ -48,16 +37,10 @@ import {IGreeter} from '../interfaces/IGreeter.sol';
       function greet() external view override returns (string memory _greet) {
         return greeting;
       }`,
-<<<<<<< HEAD
   },
   {
     id: 3,
     value: `  /// @notice Sets greeting that will be used during greet
-=======
-	},
-	{
-		value: `  /// @notice Sets greeting that will be used during greet
->>>>>>> 044031a (save tree in progress)
     /// @dev Some explanation only defined for devs
     /// @param _greeting The greeting to be used
     /// @return _changedGreet Was greeting changed or nah
@@ -109,8 +92,7 @@ function App() {
         <PanelGroup direction="horizontal">
           <Box display="flex" alignItems="center" width="100%">
             <Panel id="tree" defaultSize={50} order={1}>
-              <Box width="50vw" height="90vh">
-                <Box
+              <Box
 							height="90vh"
 							overflow={"auto"}
 							paddingTop={"20px"}
