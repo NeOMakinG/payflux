@@ -14,7 +14,6 @@ export const BlockGenerator = ({ id }: { id: BlockId }) => {
     <Block
       {...props}
       onClickDelete={() => openModal("delete-block-form", { id })}
-      mode={props.mode}
     />
   );
 };

@@ -6,7 +6,7 @@ import {
   SelectedBlockModal,
 } from "../shared/structure";
 import { BlockProps } from "../components/Block/types";
-import { BlockType } from "../shared/functions";
+import { BlockType, Conditions, Functions } from "../shared/functions";
 
 type UsePayfluxStoreType = {
   blockIdToProps: BlockIdToProps;
@@ -16,10 +16,12 @@ type UsePayfluxStoreType = {
   removeBlock: (blockId: BlockId) => void;
   selectedBlockModal: SelectedBlockModal;
   setBlockModal: (blockModal: SelectedBlockModal) => void;
+  hoveringMode: Conditions | Functions | null;
+  setHoveringMode: (hoveringMode: Conditions | Functions | null) => void;
 };
 
 export const usePayfluxStore = create<UsePayfluxStoreType>()((set) => ({
-  blockIdToProps: { start: { type: BlockType.START,  } },
+  blockIdToProps: { start: { type: BlockType.START } },
   setBlockIdToProps: (blockId: BlockId, props: BlockProps) =>
     set((state) => ({
       blockIdToProps: { ...state.blockIdToProps, [blockId]: props },
@@ -48,34 +50,40 @@ export const usePayfluxStore = create<UsePayfluxStoreType>()((set) => ({
     }));
   },
   removeBlock: (blockId: BlockId) => {
-		// recusively search for the blockId and remove it
-		const searchAndRemove = (block: BlocksStruct, parent?: BlocksStruct) => {
-			if (block.id === blockId) {
-				if (parent?.children) {
-					if (parent?.children?.length === 1) {
-						delete parent.children;
-					} else {
-						parent.children = parent.children.filter(
-							(child) => child.id !== blockId
-						);
-					}
-				}
-			}
-			if (block.children) {
-				block.children.forEach((child) => searchAndRemove(child, block));
-			}
-			return block;
-		};
-		set((state) => ({
-			blockStructure: JSON.parse(
-				JSON.stringify(searchAndRemove(state.blockStructure))
-			),
-		}));
-	},
+    // recusively search for the blockId and remove it
+    const searchAndRemove = (block: BlocksStruct, parent?: BlocksStruct) => {
+      if (block.id === blockId) {
+        if (parent?.children) {
+          if (parent?.children?.length === 1) {
+            delete parent.children;
+          } else {
+            parent.children = parent.children.filter(
+              (child) => child.id !== blockId
+            );
+          }
+        }
+      }
+      if (block.children) {
+        block.children.forEach((child) => searchAndRemove(child, block));
+      }
+      return block;
+    };
+    set((state) => ({
+      blockStructure: JSON.parse(
+        JSON.stringify(searchAndRemove(state.blockStructure))
+      ),
+    }));
+  },
   selectedBlockModal: null,
   setBlockModal: (selectedBlockModal: SelectedBlockModal) => {
     set(() => ({
       selectedBlockModal,
+    }));
+  },
+  hoveringMode: null,
+  setHoveringMode: (hoveringMode: Conditions | Functions | null) => {
+    set(() => ({
+      hoveringMode,
     }));
   },
 }));
