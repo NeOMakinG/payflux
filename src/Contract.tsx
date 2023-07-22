@@ -1,4 +1,3 @@
-import "./App.css";
 import { Typography } from "@mui/material";
 import { useContract, useCompileContract, PaymasterContractType } from "./hooks/useContract";
 import { useEffect } from "react";
@@ -18,7 +17,7 @@ function Contract() {
 	return (
 		<>
 			<button onClick={compile}>Compile</button>
-			<Typography>{contract}</Typography>
+			{/* <Typography>{contract}</Typography> */}
 		</>
 	);
 }

@@ -69,7 +69,6 @@ import {IGreeter} from '../interfaces/IGreeter.sol';
   }`,
 	},
 ];
-import "./App.css";
 import Contract from "./Contract";
 
 function App() {

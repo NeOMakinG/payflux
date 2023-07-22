@@ -10,7 +10,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "bundle": "mkdir -p dist && npx browserify -t babelify ./worker.js > ./dist/bundle.js" 
+    "bundle": "mkdir -p public/dist && npx browserify -t babelify ./worker.js > ./public/dist/bundle.js" 
   },
   "dependencies": {
     "browserify": "^17.0.0",
