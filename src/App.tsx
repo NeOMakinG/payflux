@@ -9,6 +9,7 @@ import {
 	PanelResizeHandle,
 } from "react-resizable-panels";
 import { Playground } from "./components/Playground";
+import React from "react";
 
 const snippetsMonkeyPatch = [
   {
@@ -84,6 +85,28 @@ function App() {
 
 		editorPanel.current?.collapse();
 	};
+
+
+
+  const contract = `
+  // SPDX-License-Identifier: MIT
+  pragma solidity ^0.8.9;
+
+  contract MyContract {
+  }
+  `
+
+  const worker = new Worker('../dist/bundle.js');
+  worker.addEventListener('message', function (e) {
+      const output = e.data.output
+      for (const contractName in output.contracts['contract']) {
+          console.log(`Bytecode of contract ${contractName}: ${output.contracts['contract'][contractName].evm.bytecode.object}`);
+      }
+  }, false);
+
+  worker.postMessage({
+      contractCode: contract,
+  });
 
   return (
     <>
