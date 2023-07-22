@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material"
 import { useState } from "react"
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { SubmitButton } from "./SubmitButton";
 
 export const TimeInterval = () => {
   const [selectedDateFirst, handleDateChangeFirst] = useState<Date | null>(null);
@@ -34,6 +35,7 @@ export const TimeInterval = () => {
           onChange={handleDateChangeSecond}
         />
 			</Box>
+      <SubmitButton onClick={() => {}} />
 		</Box>
 	)
 }
