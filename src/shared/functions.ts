@@ -1,4 +1,5 @@
 export enum BlockType {
+	PLUS = "Plus",
   CONDITION = "Condition",
   FUNCTION = "Function",
   START = "Start",
