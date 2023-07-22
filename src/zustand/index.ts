@@ -21,11 +21,10 @@ type UsePayfluxStoreType = {
 };
 
 export const usePayfluxStore = create<UsePayfluxStoreType>()((set) => ({
-<<<<<<< HEAD
-  blockIdToProps: { start: { type: BlockType.START } },
-=======
-  blockIdToProps: { start: { type: BlockType.START  }, "0": { type: BlockType.PLUS }},
->>>>>>> main
+  blockIdToProps: {
+    start: { type: BlockType.START },
+    "0": { type: BlockType.PLUS },
+  },
   setBlockIdToProps: (blockId: BlockId, props: BlockProps) =>
     set((state) => ({
       blockIdToProps: { ...state.blockIdToProps, [blockId]: props },
@@ -51,27 +50,33 @@ export const usePayfluxStore = create<UsePayfluxStoreType>()((set) => ({
       blockStructure: JSON.parse(
         JSON.stringify(searchAndAdd(state.blockStructure))
       ),
-      blockIdToProps: { ...state.blockIdToProps, [childrenId]: { type: BlockType.PLUS } }
+      blockIdToProps: {
+        ...state.blockIdToProps,
+        [childrenId]: { type: BlockType.PLUS },
+      },
     }));
   },
   removeBlock: (blockId: BlockId) => {
-		// recusively search for the blockId and remove it
-		const searchAndRemove = (block: BlocksStruct) => {
-			if (block.id === blockId) {
-				return { id: block.id, children: undefined };
-			}
-			if (block.children) {
-				block.children = block.children.map((child) => searchAndRemove(child));
-			}
-			return block;
-		};
-		set((state) => ({
-			blockStructure: JSON.parse(
-				JSON.stringify(searchAndRemove(state.blockStructure))
-			),
-      blockIdToProps: { ...state.blockIdToProps, [blockId]: { type: BlockType.PLUS } }
-		}));
-	},
+    // recusively search for the blockId and remove it
+    const searchAndRemove = (block: BlocksStruct) => {
+      if (block.id === blockId) {
+        return { id: block.id, children: undefined };
+      }
+      if (block.children) {
+        block.children = block.children.map((child) => searchAndRemove(child));
+      }
+      return block;
+    };
+    set((state) => ({
+      blockStructure: JSON.parse(
+        JSON.stringify(searchAndRemove(state.blockStructure))
+      ),
+      blockIdToProps: {
+        ...state.blockIdToProps,
+        [blockId]: { type: BlockType.PLUS },
+      },
+    }));
+  },
   selectedBlockModal: null,
   setBlockModal: (selectedBlockModal: SelectedBlockModal) => {
     set(() => ({
