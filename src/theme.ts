@@ -14,7 +14,7 @@ type ColorsObject = {
 type CustomVariables = {
 	borderRadius: {
 		default: string;
-    small: string;
+		small: string;
 	};
 	block: {
 		minWidth: string;
@@ -30,25 +30,25 @@ type CustomVariables = {
 
 declare module "@mui/material/styles" {
 
-  interface TypeBackground {
+	interface TypeBackground {
 		default: string;
 		dark: string;
-    paper: string;
+		paper: string;
 		sidebar: string;
 	}
 
-  interface Theme {
-    custom: CustomVariables;
-  }
+	interface Theme {
+		custom: CustomVariables;
+	}
 
-  interface ThemeOptions {
+	interface ThemeOptions {
 		custom: CustomVariables;
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-empty-interface
-	interface Palette extends ColorsObject {}
+	interface Palette extends ColorsObject { }
 	// eslint-disable-next-line @typescript-eslint/no-empty-interface
-	interface PaletteOptions extends ColorsObject {}
+	interface PaletteOptions extends ColorsObject { }
 }
 
 const palette: PaletteOptions = {
@@ -57,35 +57,35 @@ const palette: PaletteOptions = {
 		dark: "#212121",
 		sidebar: "#2D2D2D",
 	},
-  text: {
-    primary: "#ffffff",
-  },
+	text: {
+		primary: "#ffffff",
+	},
 	gradient: {
 		red: "linear-gradient(30deg, #F20486, #FF6068)",
 	},
 };
 
 const custom: CustomVariables = {
-  borderRadius: {
-    default: "23px",
-    small: "8px"
-  },
-  block: {
-	minWidth: "230px",
-  	maxWidth: "300px",
-	bodyHeight: "100px",
-	barHeight: "30px",
-	fontSize: {
-		body: "20px",
-		bar: "15px"
+	borderRadius: {
+		default: "23px",
+		small: "12px"
+	},
+	block: {
+		minWidth: "200px",
+		maxWidth: "250px",
+		bodyHeight: "60px",
+		barHeight: "30px",
+		fontSize: {
+			body: "20px",
+			bar: "14px"
+		}
 	}
-  }
 };
 
 export const theme = createTheme({
 	palette,
 	custom,
-  typography: {
-    fontFamily: "Inconsolata"
-  },
+	typography: {
+		fontFamily: "Inconsolata"
+	},
 });
