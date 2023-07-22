@@ -21,6 +21,7 @@
     "react-resizable-panels": "^0.0.54",
     "react-scripts": "5.0.1",
     "react-syntax-highlighter": "^15.5.0",
+    "treeflex": "^2.0.1",
     "zustand": "^4.3.9"
   },
   "devDependencies": {

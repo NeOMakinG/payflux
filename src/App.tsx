@@ -8,6 +8,7 @@ import {
   PanelGroup,
   PanelResizeHandle,
 } from "react-resizable-panels";
+import { Playground } from "./components/Playground";
 
 const snippetsMonkeyPatch = [
   {
@@ -91,7 +92,16 @@ function App() {
         <PanelGroup direction="horizontal">
           <Box display="flex" alignItems="center" width="100%">
             <Panel id="tree" defaultSize={50} order={1}>
-              <Box width="50vw" height="90vh"></Box>
+              <Box width="50vw" height="90vh">
+                <Box
+                  marginLeft={"100px"}
+                  width="calc(50vw - 90px)"
+                  height="90vh"
+                  overflow={"auto"}
+                >
+                  <Playground />
+                </Box>
+              </Box>
             </Panel>
             <Panel
               ref={editorPanel}
