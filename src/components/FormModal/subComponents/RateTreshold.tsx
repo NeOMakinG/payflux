@@ -48,7 +48,7 @@ export const RateTreshold = () => {
           }}
         />
       </Box>
-      <SubmitButton onClick={() => {}} />
+      <SubmitButton context={{ number }} />
     </Box>
   );
 };

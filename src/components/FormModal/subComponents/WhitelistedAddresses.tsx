@@ -3,7 +3,7 @@ import { useState } from "react";
 import { SubmitButton } from "./SubmitButton";
 
 export const WhitelistedAddresses = () => {
-  const [text, setText] = useState<string | null>(null)
+  const [text, setText] = useState<string | null>(null);
   return (
     <Box
       component="form"
@@ -40,7 +40,7 @@ export const WhitelistedAddresses = () => {
           }}
         />
       </Box>
-      <SubmitButton onClick={() => {}} />
+      <SubmitButton context={{ text }} />
     </Box>
   );
 };
