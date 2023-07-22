@@ -27,32 +27,34 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
   };
 
   return (
-    <Box>
-      <Box
-        borderRadius={theme.custom.padding.large}
-        bgcolor={theme.palette.background.dark}
-        border={`1px solid ${theme.palette.border.light}`}
-        width="100%"
-        p={4}
-      >
-        {snippets.map((snippet, index) => (
-          <SyntaxHighlighter
-            customStyle={{
-              margin: 0,
-              padding: 0,
-              position: "relative",
-              border: "1px solid transparent",
-              transition: ".25s ease-out",
-              backgroundColor: theme.palette.background.dark,
-              ...(index === highlightedIndex ? highlightedStyle : null),
-            }}
-            style={vscDarkPlus}
-            language="solidity"
-          >
-            {snippet.value}
-          </SyntaxHighlighter>
-        ))}
-      </Box>
+    <Box
+      borderRadius={theme.custom.padding.large}
+      bgcolor={theme.palette.background.dark}
+      border={`1px solid ${theme.palette.border.light}`}
+      width="100%"
+      overflow="auto"
+      height="90vh"
+      p={4}
+    >
+      {snippets.map((snippet, index) => (
+        <SyntaxHighlighter
+          customStyle={{
+            margin: 0,
+            padding: 0,
+            position: "relative",
+            border: "1px solid transparent",
+            transition: ".25s ease-out",
+            width: "min-content",
+            overflow: "visible",
+            backgroundColor: theme.palette.background.dark,
+            ...(index === highlightedIndex ? highlightedStyle : null),
+          }}
+          style={vscDarkPlus}
+          language="solidity"
+        >
+          {snippet.value}
+        </SyntaxHighlighter>
+      ))}
     </Box>
   );
 };
