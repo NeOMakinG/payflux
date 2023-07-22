@@ -468,6 +468,11 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.44.0.tgz#961a5903c74139390478bdc808bcde3fc45ab7af"
   integrity sha512-Ag+9YM4ocKQx9AarydN0KY2j0ErMHNIocPDrVo8zAE44xLTjEtz81OdR68/cydGtk6m6jDb5Za3r2useMzYmSw==
 
+"@fontsource/inconsolata@^5.0.5":
+  version "5.0.5"
+  resolved "https://registry.yarnpkg.com/@fontsource/inconsolata/-/inconsolata-5.0.5.tgz#241067a6ab4e83fcbd1976408f02eacfa2a1a6d4"
+  integrity sha512-uU9t2j/hq4UweFXTjo+geLPFqhTucDdeei/a4BEHdtFPwJIfXLXmzlHeDrjOatHYGbRlJlydS4Ipr16A4O/e5A==
+
 "@humanwhocodes/config-array@^0.11.10":
   version "0.11.10"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.11.10.tgz#5a3ffe32cc9306365fb3fd572596cd602d5e12d2"
