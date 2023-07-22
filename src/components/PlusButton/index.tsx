@@ -19,14 +19,6 @@ export const PlusButton = ({ id }: PlusButtonProps) => {
     setBlockModal: state.setBlockModal,
   }));
 
-  // const addBlock = (type: BlockType) => {
-  //   const newId = (Object.keys(blockIdToProps).length + 1).toString();
-  //   return () => {
-  //     setBlockIdToProps(newId, { type });
-  //     addChild(id, newId);
-  //   };
-  // };
-
   const actions = [
     {
       icon: <FunctionsIcon />,

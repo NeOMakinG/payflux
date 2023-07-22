@@ -76,6 +76,7 @@ export const Playground = ({ blockStructure }: PlaygroundProps) => {
       <AddBlockModal
         onClose={() => setBlockModal(null)}
         open={!!selectedBlockModal}
+        blockId={blockStructure.id}
       >
         <></>
       </AddBlockModal>

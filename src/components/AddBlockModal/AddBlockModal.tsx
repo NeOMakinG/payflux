@@ -6,27 +6,56 @@ import { FormModal } from "../FormModal";
 import { FormModalProps } from "../FormModal/types";
 import { useState } from "react";
 import { BlockPresenter } from "./BlockPresenter";
-import { blocksById } from "./constants";
+import { blocksByMode } from "./constants";
+import { BlockId } from "../../shared/structure";
 
 const blockValuesByType = {
   [BlockType.CONDITION]: Conditions,
   [BlockType.FUNCTION]: Functions,
 } as Record<BlockType, typeof Conditions | typeof Functions>;
 
-export function AddBlockModal(props: FormModalProps) {
-  const { selectedBlockModal, setBlockModal } = usePayfluxStore((state) => ({
-    selectedBlockModal: state.selectedBlockModal,
-    setBlockModal: state.setBlockModal,
-  }));
+type AddBlockModalProps = {
+  blockId: BlockId;
+} & FormModalProps;
+
+export function AddBlockModal(props: AddBlockModalProps) {
+  const {
+    selectedBlockModal,
+    blockIdToProps,
+    setBlockIdToProps,
+    addChild,
+    setBlockModal,
+    blockStructure,
+  } = usePayfluxStore();
+  console.log(blockStructure);
   const [selectedBlock, setSelectedBlock] = useState<
     Conditions | Functions | null
   >(null);
 
   if (!selectedBlockModal) return null;
 
+  const addBlock = (type: BlockType, mode: Conditions | Functions) => {
+    const newId = (Object.keys(blockIdToProps).length + 1).toString();
+    console.log(props.blockId, newId, type, mode);
+    return () => {
+      setBlockIdToProps(newId, { type, mode });
+      addChild(props.blockId, newId);
+    };
+  };
+
   const handleClose = () => {
     setBlockModal(null);
     setSelectedBlock(null);
+  };
+
+  const handleBlockClick = (type: BlockType, mode: Conditions | Functions) => {
+    if (!blocksByMode[mode]) {
+      addBlock(type, mode);
+      setBlockModal(null);
+      return;
+    }
+
+    setSelectedBlock(mode);
   };
 
   return (
@@ -38,10 +67,10 @@ export function AddBlockModal(props: FormModalProps) {
           ).map((block: Conditions | Functions) => (
             <BlockPresenter
               bodyText={block}
-              onClick={() => setSelectedBlock(block)}
+              onClick={() => handleBlockClick(selectedBlockModal.type, block)}
             />
           ))}
-        {selectedBlock && blocksById[selectedBlock]}
+        {selectedBlock && blocksByMode[selectedBlock]}
       </Box>
     </FormModal>
   );
