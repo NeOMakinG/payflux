@@ -36,8 +36,8 @@ export function SideBar() {
 							y2="27.4992"
 							gradientUnits="userSpaceOnUse"
 						>
-							<stop stop-color="#F20486" />
-							<stop offset="1" stop-color="#FF6068" />
+							<stop stopColor="#F20486" />
+							<stop offset="1" stopColor="#FF6068" />
 						</linearGradient>
 					</defs>
 				</svg>

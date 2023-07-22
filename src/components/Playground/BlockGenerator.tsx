@@ -1,16 +1,20 @@
-import { BlockType, Functions } from "../../shared/functions"
-import { BlockId } from "../../shared/structure"
+import { BlockType, Functions } from "../../shared/functions";
+import { BlockId } from "../../shared/structure";
 import { usePayfluxStore } from "../../zustand";
-import { Block } from "../Block/block"
+import { useModal } from "../../zustand/modal";
+import { Block } from "../Block/block";
 
 export const BlockGenerator = ({ id }: { id: BlockId }) => {
-  const blockIdToProps = usePayfluxStore(state => state.blockIdToProps);
-  const props = blockIdToProps[id];
+	const blockIdToProps = usePayfluxStore((state) => state.blockIdToProps);
+	const props = blockIdToProps[id];
+	const openModal = useModal((state) => state.open);
 
-	if (id === "start") return (
-		<Block type={BlockType.START} />
-	)
+	if (id === "start") return <Block type={BlockType.START} />;
 	return (
-		<Block {...props} content={{ name: `${props.type}-${id}` as Functions, context: undefined }} />
-	)
-}
+		<Block
+			{...props}
+			onClickDelete={() => openModal("delete-block-form", { id })}
+			content={{ name: `${props.type}-${id}` as Functions, context: undefined }}
+		/>
+	);
+};

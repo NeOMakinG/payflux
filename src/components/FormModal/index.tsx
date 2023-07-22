@@ -11,8 +11,6 @@ const style = {
 	boxShadow: 24,
 	p: 4,
 	padding: "15px",
-	height: "30vh",
-	width: "70vw",
 	":focus": {
 		outline: "none",
 	},
