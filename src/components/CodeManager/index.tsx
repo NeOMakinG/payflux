@@ -47,16 +47,30 @@ const contractFnToCode: ContractFnToCode = {
 };
 
 const contractConditionsToCode: ContractConditionsToCode = {
-  [Conditions.WHITELIST]: () => ({
-    use: ` require(
+	[Conditions.WHITELIST]: () => ({
+		use: `require(
             whilelist[sender],
             "WhitelistPaymaster: sender not whitelisted"
-        );`,
-    var: `mapping(address => bool) public whitelist`,
-    construct: `		for (uint256 i = 0; i < whitelist.length; i++) {
+      );`,
+		var: `\n  mapping(address => bool) public whitelist\n\n`,
+		construct: `		for (uint256 i = 0; i < whitelist.length; i++) {
             whilelist[whitelist[i]] = true;
         }`,
-  }),
+	}),
+	[Conditions.TIME]: () => ({
+		use: ` uint256 hour = (block.timestamp / 60 / 60) % 24;  // Get the current hour in UTC
+        require(hour >= dayStart && hour < dayEnd, "DaytimePaymaster: transactions are only covered during daytime");`,
+		construct: `        dayStart = _dayStart;
+        dayEnd = _dayEnd;`,
+		constructParams: `      uint16 _dayStart, 
+      uint16 _dayEnd`,
+	}),
+	[Conditions.REFERRALS]: () => ({
+		contractName: `  IReferralRegistry public referralRegistry;`,
+		use: `// Check if the user is a referred user
+      bool isReferred = referralRegistry.isReferred(userOp.senderAddress);
+      require(isReferred, "Sender is not a referred user");`,
+	}),
 };
 
 export function CodeManager() {
@@ -128,7 +142,7 @@ export function CodeManager() {
       });
 
       // add condition var
-      if (resultCond.var) {
+      if (resultCond?.var) {
         contractStructure.vars.push({
           id:
             "validate-paymaster-usop-vars-" + contractStructure.vars.length + 1,
@@ -138,7 +152,7 @@ export function CodeManager() {
       }
 
       // add construct statements
-      if (resultCond.construct) {
+      if (resultCond?.construct) {
         contractStructure.constructorBody.push({
           id:
             "validate-paymaster-usop-construct-" +
@@ -146,6 +160,30 @@ export function CodeManager() {
             1,
           mode,
           value: resultCond.construct,
+        });
+      }
+
+      // add construct params
+      if (resultCond?.constructParams) {
+        contractStructure.constructorParamsStart.push({
+          id:
+            "validate-paymaster-usop-construct-params-" +
+            contractStructure.constructorParamsStart.length +
+            1,
+          mode,
+          value: resultCond.constructParams,
+        });
+      }
+
+      // add contract name
+      if (resultCond?.contractName) {
+        contractStructure.contractName.push({
+          id:
+            "validate-paymaster-usop-contract-name-" +
+            contractStructure.contractName.length +
+            1,
+          mode,
+          value: resultCond.contractName,
         });
       }
     }

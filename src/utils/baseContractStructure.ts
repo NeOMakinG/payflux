@@ -5,10 +5,9 @@ export const getBaseContractStructure = (contractName: string) => ({
 			value: `// SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.12;
 
-/* solhint-disable reason-string */
-/* solhint-disable no-inline-assembly */
-
 import "../core/BasePaymaster.sol";
+import "@openzeppelin/contracts/utils/Address.sol";
+
 `,
 		},
 	],
@@ -16,17 +15,10 @@ import "../core/BasePaymaster.sol";
 		{
 			id: "contract-name-1",
 			value: `contract ${contractName} is BasePaymaster {
-    using UserOperationLib for UserOperation;`,
+    using Address for address payable;`,
 		},
 	],
-	receive: [
-		{
-			id: "receive-1",
-			value: `  receive() external payable {
-    // accept all incoming payments
-  }\n\n`,
-		},
-	],
+	receive: [],
 	vars: [],
 	constructorParamsStart: [
 		{
@@ -67,11 +59,24 @@ import "../core/BasePaymaster.sol";
 	validatePaymasterUsOpEnd: [
 		{
 			id: "validate-paymaster-usop-end-1",
-			value: `      return ("", 1);
+			value: `      return ("", 0);
   }`,
 		},
 	],
 	functions: [],
+	postOpStart: [
+		{
+			id: "post-op-params-start-1",
+			value: `\n  function _postOp(PostOpMode /*mode*/, bytes calldata /*context*/, uint256 /*actualGasCost*/) internal override {`,
+		},
+	],
+	postOpBody: [],
+	postOpEnd: [
+		{
+			id: "post-op-end-1",
+			value: `  }`,
+		},
+	],
 	contractEnd: [
 		{
 			id: "contract-end-1",

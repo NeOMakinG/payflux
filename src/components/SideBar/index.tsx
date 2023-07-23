@@ -7,11 +7,7 @@ import {
 } from "@mui/material";
 import { TooltipWrapper } from "../TooltipWrapper";
 import { useMetadata } from "../../zustand/metadata";
-import {
-  PaymasterContractType,
-  useCompileContract,
-  useContract,
-} from "../../hooks/useContract";
+import { useCompileContract } from "../../hooks/useContract";
 import { useEffect, useState } from "react";
 import { deployContract } from "../../utils/wallet/connectToWallet";
 import { FormModal } from "../FormModal";
@@ -24,7 +20,7 @@ export function SideBar() {
     downloadSource: state.downloadSource,
     contractName: state.contractName,
   }));
-  const contract = useContract(PaymasterContractType.DepositPaymaster);
+  const contract = useMetadata((state) => state.downloadSource);
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
