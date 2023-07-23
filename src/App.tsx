@@ -40,13 +40,19 @@ function App() {
     // eslint-disable-next-line
   }, []);
 
-  const worker = new Worker('../dist/bundle.js');
-  worker.addEventListener('message', function (e) {
-      const output = e.data.output
-      for (const contractName in output.contracts['contract']) {
-          console.log(`Bytecode of contract ${contractName}: ${output.contracts['contract'][contractName].evm.bytecode.object}`);
+  const worker = new Worker("../dist/bundle.js");
+  worker.addEventListener(
+    "message",
+    function (e) {
+      const output = e.data.output;
+      for (const contractName in output.contracts["contract"]) {
+        console.log(
+          `Bytecode of contract ${contractName}: ${output.contracts["contract"][contractName].evm.bytecode.object}`
+        );
       }
-  }, false);
+    },
+    false
+  );
 
   return (
     <>

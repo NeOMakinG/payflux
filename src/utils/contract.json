@@ -1,0 +1,79 @@
+{
+	"import": [
+		{
+			"id": "import-1",
+			"value": " // SPDX-License-Identifier: GPL-3.0\n  pragma solidity ^0.8.12;\n  \n  import \"../core/BasePaymaster.sol\";\n  import \"@openzeppelin/contracts/utils/Address.sol\";\n  \n  "
+		}
+	],
+	"contractName": [
+		{
+			"id": "contract-name-1",
+			"value": "contract <contractName> is BasePaymaster {\n      using Address for address payable;"
+		}
+	],
+	"receive": [],
+	"vars": [],
+	"constructorParamsStart": [
+		{
+			"id": "constructor-params-start-1",
+			"value": "  constructor(\n        IEntryPoint _entryPoint,"
+		}
+	],
+	"constructorParamsEnd": [
+		{
+			"id": "constructor-params-end-1",
+			"value": "  ) BasePaymaster(_entryPoint) {"
+		}
+	],
+	"constructorBody": [],
+	"constructorEnd": [
+		{
+			"id": "constructor-end-1",
+			"value": "\n          }\n"
+		}
+	],
+	"validatePaymasterUsOpParamsStart": [
+		{
+			"id": "validate-paymaster-usop-params-start-1",
+			"value": "\n  function _validatePaymasterUserOp(\n          UserOperation calldata userOp,\n          bytes32 /*userOpHash*/,\n          uint256 requiredPreFund"
+		}
+	],
+	"validatePaymasterUsOpParamsEnd": [
+		{
+			"id": "validate-paymaster-usop-params-end-1",
+			"value": "  ) internal override returns (bytes memory context, uint256 validationData) {"
+		}
+	],
+	"validatePaymasterUsOpBody": [
+		{
+			"id": "validate-paymaster-usop-body-1",
+			"value": " // Check that the user operation is a valid operation"
+		}
+	],
+	"validatePaymasterUsOpEnd": [
+		{
+			"id": "validate-paymaster-usop-end-1",
+			"value": "      return (\"\",\n            0);\n          }"
+		}
+	],
+	"functions": [],
+	"postOpStart": [
+		{
+			"id": "post-op-params-start-1",
+			"value": "\n  function _postOp(PostOpMode /*mode*/, bytes calldata /*context*/, uint256 /*actualGasCost*/) internal override {"
+		}
+	],
+	"postOpBody": [],
+	"postOpEnd": [
+		{
+			"id": "post-op-end-1",
+			"value": "\n          }"
+		}
+	],
+	"contractEnd": [
+		{
+			"id": "contract-end-1",
+			"value": "\n        }"
+		}
+	]
+}
