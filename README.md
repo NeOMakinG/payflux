@@ -37,3 +37,10 @@ yarn start
 
 - If you hover a block, you can see the corresponding statement in the code
 ![Main page](./images/home-page-code-hover.png)
+
+- You can click on "Send" button to deploy the smart contract
+![Main page](./images/validate-tx.png)
+
+- Congrats! If you validate the transaction, your smart contract is deployed
+
+- Moreover, if you click on the "Save the code", you can download the source code to deploy it by yourself.
