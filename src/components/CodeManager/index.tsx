@@ -172,7 +172,7 @@ export function CodeManager() {
         Object.values(contractSource)
           .flat()
           .map((e) => e.value)
-          .join()
+          .join("\n")
       );
 
       return contractSource;
