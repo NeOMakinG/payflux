@@ -1,6 +1,5 @@
 import { TrampolineProvider } from "../../types/TrampolineProvider";
 
-
 export function getWalletProvider(timeout = 3000): Promise<TrampolineProvider> {
 	let handled = false;
 

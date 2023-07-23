@@ -13,6 +13,7 @@ export function SideBar() {
 	useEffect(() => {
 		if (!compiling && compiledContract) {
 			console.log(compiledContract);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const bytecode = (compiledContract as any).contracts['contract']['BasePaymaster'].evm.bytecode.object;
       deployContract(bytecode);
 		}
