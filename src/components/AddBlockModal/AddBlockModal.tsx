@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { BlockType, Conditions, Functions } from "../../shared/functions";
 import { enumToArray } from "../../utils/enumToArray";
 import { usePayfluxStore } from "../../zustand";
@@ -26,6 +26,7 @@ export function AddBlockModal(props: FormModalProps) {
     addPlus,
   } = usePayfluxStore();
 
+  const theme = useTheme();
   if (!selectedBlockModal) return null;
 
   const handleClose = () => {
@@ -57,7 +58,13 @@ export function AddBlockModal(props: FormModalProps) {
 
   return (
     <FormModal {...props} onClose={handleClose}>
-      <Box display="flex" alignItems="center" flexWrap="wrap">
+      <Box 
+        sx={{
+          display: "grid",
+          gridTemplateColumns: `repeat(auto-fit, minmax(${theme.custom.block.minWidth}, 1fr))`,
+          gridGap: "10px",
+        }}
+      >
         {!selectedBlockModal.mode &&
           enumToArray<Conditions | Functions>(
             blockValuesByType[selectedBlockModal.type]

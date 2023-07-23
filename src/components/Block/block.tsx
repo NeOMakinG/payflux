@@ -15,6 +15,7 @@ export const Block = ({
   topBar,
   bottomBar,
   onClickDelete,
+	dot
   onClick,
 }: BlockProps) => {
   const theme = useTheme();
@@ -36,6 +37,7 @@ export const Block = ({
             transform: "translate(50%, -50%) scale(1)",
           },
         },
+				cursor: "pointer",
       }}
     >
       {/* CLOSE BTN */}
@@ -93,7 +95,7 @@ export const Block = ({
         onMouseLeave={() => setHoveringMode(null)}
         onClick={onClick}
       >
-        {/* {dot && (dot === "top" || dot === "both") && (
+        {dot && (dot === "top" || dot === "both") && (
 				<Box
 					sx={{
 						height: "10px",
@@ -118,7 +120,7 @@ export const Block = ({
 						bottom: "-5px",
 					}}
 				/>
-			)} */}
+			)}
         <Grow in={true} timeout={500}>
           <Card
             sx={{
@@ -137,7 +139,10 @@ export const Block = ({
               backgroundOrigin: "border-box",
               backgroundClip: "content-box, border-box",
               position: "relative",
-            }}
+  						":hover": {
+							backgroundImage: `linear-gradient(${theme.palette.background.sidebar}, ${theme.palette.background.sidebar}), ${theme.palette.gradient.red}`,
+						},
+          }}
           >
             {topBar && (
               <Box
@@ -153,14 +158,19 @@ export const Block = ({
                   flexDirection: "row",
                   alignItems: "center",
                   paddingX: "10px",
-                }}
+  								userSelect: "none",
+              }}
               >
                 <Typography
                   variant="h6"
                   style={{
                     fontSize: theme.custom.block.fontSize.bar,
                   }}
-                >
+  								sx={{
+									userSelect: "none",
+								}}
+								
+              >
                   {topBar.text}
                 </Typography>
               </Box>
