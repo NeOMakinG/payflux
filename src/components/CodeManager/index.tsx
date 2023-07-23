@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { BlockType, Conditions, Functions } from "../../shared/functions";
 import { BlocksStruct } from "../../shared/structure";
 import { spacer } from "../../utils/spacer";
@@ -10,7 +10,7 @@ import {
   ContractFnToCode,
   FnDefinition,
 } from "./types";
-import { getBaseContractStructure } from "../../utils/baseContractStructure";
+import { getBaseContract } from "../../utils/baseContractStructure";
 import { useMetadata } from "../../zustand/metadata";
 
 const contractFnToCode: ContractFnToCode = {
@@ -47,30 +47,30 @@ const contractFnToCode: ContractFnToCode = {
 };
 
 const contractConditionsToCode: ContractConditionsToCode = {
-	[Conditions.WHITELIST]: () => ({
-		use: `require(
+  [Conditions.WHITELIST]: () => ({
+    use: `require(
             whilelist[sender],
             "WhitelistPaymaster: sender not whitelisted"
       );`,
-		var: `\n  mapping(address => bool) public whitelist\n\n`,
-		construct: `		for (uint256 i = 0; i < whitelist.length; i++) {
+    var: `\n  mapping(address => bool) public whitelist\n\n`,
+    construct: `		for (uint256 i = 0; i < whitelist.length; i++) {
             whilelist[whitelist[i]] = true;
         }`,
-	}),
-	[Conditions.TIME]: () => ({
-		use: ` uint256 hour = (block.timestamp / 60 / 60) % 24;  // Get the current hour in UTC
+  }),
+  [Conditions.TIME]: () => ({
+    use: ` uint256 hour = (block.timestamp / 60 / 60) % 24;  // Get the current hour in UTC
         require(hour >= dayStart && hour < dayEnd, "DaytimePaymaster: transactions are only covered during daytime");`,
-		construct: `        dayStart = _dayStart;
+    construct: `        dayStart = _dayStart;
         dayEnd = _dayEnd;`,
-		constructParams: `      uint16 _dayStart, 
+    constructParams: `      uint16 _dayStart, 
       uint16 _dayEnd`,
-	}),
-	[Conditions.REFERRALS]: () => ({
-		contractName: `  IReferralRegistry public referralRegistry;`,
-		use: `// Check if the user is a referred user
+  }),
+  [Conditions.REFERRALS]: () => ({
+    contractName: `  IReferralRegistry public referralRegistry;`,
+    use: `// Check if the user is a referred user
       bool isReferred = referralRegistry.isReferred(userOp.senderAddress);
       require(isReferred, "Sender is not a referred user");`,
-	}),
+  }),
 };
 
 export function CodeManager() {
@@ -81,6 +81,14 @@ export function CodeManager() {
       hoveringMode: state.hoveringMode,
     })
   );
+  const [contractSource, setContractSource] = useState<string | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      const response = await getBaseContract();
+      setContractSource(response);
+    })();
+  }, []);
 
   const { contractName, setDownloadSource } = useMetadata((state) => ({
     contractName: state.contractName,
@@ -199,24 +207,28 @@ export function CodeManager() {
 
   const populatedContractStructure = useMemo(
     () => {
-      const contractSource = getPopulatedContractStructure(
+      if (!contractSource) return [];
+      const contractString = getPopulatedContractStructure(
         JSON.parse(
-          JSON.stringify(getBaseContractStructure(contractName || "XXX_XXX"))
+          JSON.stringify(contractSource).replace(
+            "<contractName>",
+            contractName || "XXX_XXX"
+          )
         ),
         blockStructure
       );
 
       setDownloadSource(
-        Object.values(contractSource)
+        Object.values(contractString)
           .flat()
           .map((e) => e.value)
           .join("\n")
       );
 
-      return contractSource;
+      return contractString;
     },
     // eslint-disable-next-line
-    [blockStructure, contractName]
+    [blockStructure, contractName, contractSource]
   );
 
   return (
