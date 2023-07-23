@@ -29,6 +29,11 @@ export const BlockPresenter: React.FC<BlockPresenterProps> = ({
         backgroundOrigin: "border-box",
         backgroundClip: "content-box, border-box",
         position: "relative",
+        transition: ".25s ease-out",
+        cursor: "pointer",
+        "&:hover": {
+          opacity: ".8",
+        },
       }}
       onClick={onClick}
     >

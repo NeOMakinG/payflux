@@ -1,9 +1,18 @@
 import { Box, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { SubmitButton } from "./SubmitButton";
+import { usePayfluxStore } from "../../../zustand";
 
 export const WhitelistedAddresses = () => {
-  const [text, setText] = useState<string | null>(null);
+  const { blockIdToProps, selectedBlockModal } = usePayfluxStore((state) => ({
+    blockIdToProps: state.blockIdToProps,
+    selectedBlockModal: state.selectedBlockModal,
+  }));
+  const props = selectedBlockModal?.id
+    ? blockIdToProps[selectedBlockModal?.id]
+    : null;
+
+  const [text, setText] = useState<string | null>(props?.context?.text ?? null);
   return (
     <Box
       component="form"

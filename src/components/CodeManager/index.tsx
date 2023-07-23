@@ -8,7 +8,6 @@ import { ContractFnToCode, FnDefinition } from "./types";
 import { getBaseContractStructure } from "../../utils/baseContractStructure";
 import { useMetadata } from "../../zustand/metadata";
 
-
 const contractFnToCode: ContractFnToCode = {
   [Functions.MULTIPLY]: () => ({
     def: `  function multiply(uint256 a, uint256 b) public pure returns (uint256) {
@@ -53,66 +52,68 @@ export function CodeManager() {
 
   const contractName = useMetadata((state) => state.contractName);
 
-	const getPopulatedContractStructure = (
-		contractStructure: Record<string, Snippet[]>,
-		struct?: BlocksStruct
-	): Record<string, Snippet[]> => {
-		if (!struct) return contractStructure;
+  const getPopulatedContractStructure = (
+    contractStructure: Record<string, Snippet[]>,
+    struct?: BlocksStruct
+  ): Record<string, Snippet[]> => {
+    if (!struct) return contractStructure;
 
-		const props = blockIdToProps[struct.id];
-		const mode = props?.mode || null;
-		const type = props?.type;
+    const props = blockIdToProps[struct.id];
+    const mode = props?.mode || null;
+    const type = props?.type;
 
-		if (type === BlockType.FUNCTION) {
-			const fn = contractFnToCode[(mode as Functions) || ""] as FnDefinition;
-			const resultFn = fn && fn();
+    if (type === BlockType.FUNCTION) {
+      const fn = contractFnToCode[(mode as Functions) || ""] as FnDefinition;
+      const resultFn = fn && fn();
 
-			// add function use
-			contractStructure.validatePaymasterUsOpBody.push({
-				id:
-					"validate-paymaster-usop-body-" +
-					contractStructure.validatePaymasterUsOpBody.length +
-					1,
+      // add function use
+      contractStructure.validatePaymasterUsOpBody.push({
+        id:
+          "validate-paymaster-usop-body-" +
+          contractStructure.validatePaymasterUsOpBody.length +
+          1,
+        mode,
+        value: (resultFn && spacer(6) + resultFn.use) || "",
+      });
+
+      // add function definition
+      if (
+        !contractStructure.functions.find(
+          (fn) => fn.value === "\n" + resultFn?.def
+        )
+      ) {
+        contractStructure.functions.push({
+          id: "function-" + contractStructure.functions.length + 1,
           mode,
-				value: (resultFn && spacer(6) + resultFn.use) || "",
-			});
+          value: resultFn?.def ? "\n" + resultFn?.def : "",
+        });
+      }
+    }
 
-			// add function definition
-			if (
-				!contractStructure.functions.find(
-					(fn) => fn.value === "\n" + resultFn?.def
-				)
-			) {
-				contractStructure.functions.push({
-					id: "function-" + contractStructure.functions.length + 1,
-          mode,
-					value: resultFn?.def ? "\n" + resultFn?.def : "",
-				});
-			}
-		}
+    if (struct.children && struct.children.length > 0) {
+      struct.children.forEach((child) => {
+        getPopulatedContractStructure(contractStructure, child);
+      });
+    }
+    return contractStructure;
+  };
 
-		if (struct.children && struct.children.length > 0) {
-			struct.children.forEach((child) => {
-				console.log("Add child", child);
-				getPopulatedContractStructure(contractStructure, child);
-			});
-		}
-		return contractStructure;
-	};
+  const populatedContractStructure = useMemo(
+    () =>
+      getPopulatedContractStructure(
+        JSON.parse(
+          JSON.stringify(getBaseContractStructure(contractName || "XXX_XXX"))
+        ),
+        blockStructure
+      ),
+    // eslint-disable-next-line
+    [blockStructure, contractName]
+  );
 
-	const populatedContractStructure = useMemo(
-		() =>
-			getPopulatedContractStructure(
-				JSON.parse(JSON.stringify(getBaseContractStructure(contractName || "XXX_XXX"))),
-				blockStructure
-			),
-		[blockStructure, contractName]
-	);
-
-	return (
-		<CodeEditor
-			highlightedMode={hoveringMode}
-			snippets={Object.values(populatedContractStructure).flat()}
-		/>
-	);
+  return (
+    <CodeEditor
+      highlightedMode={hoveringMode}
+      snippets={Object.values(populatedContractStructure).flat()}
+    />
+  );
 }

@@ -21,19 +21,23 @@ export const SubmitButton = ({ context }: SubmitButtonProps) => {
   const handleClick = () => {
     const { id, type, mode } = selectedBlockModal;
 
-    const firstId = (Object.keys(blockIdToProps).length).toString();
+    const firstId = Object.keys(blockIdToProps).length.toString();
+    const props = blockIdToProps[id];
+    if (!props.context) {
       addPlus(id, firstId);
-      if (type === BlockType.CONDITION) {
-        const secondId = (Object.keys(blockIdToProps).length + 1).toString();
-        addPlus(selectedBlockModal.id, secondId);
-      }
-      setBlockIdToProps(id, {
-        type,
-        mode,
-        context,
-      });
-      setBlockModal(null);
-      return;
+    }
+
+    if (type === BlockType.CONDITION && !props.context) {
+      const secondId = (Object.keys(blockIdToProps).length + 1).toString();
+      addPlus(selectedBlockModal.id, secondId);
+    }
+    setBlockIdToProps(id, {
+      type,
+      mode,
+      context,
+    });
+    setBlockModal(null);
+    return;
   };
 
   return (

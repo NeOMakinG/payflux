@@ -15,6 +15,7 @@ export const Block = ({
   topBar,
   bottomBar,
   onClickDelete,
+  onClick,
 }: BlockProps) => {
   const theme = useTheme();
   const { setHoveringMode } = usePayfluxStore((state) => ({
@@ -25,12 +26,10 @@ export const Block = ({
 
   return (
     <Box
+      className="tf-nc"
       sx={{
         position: "relative",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
+
         "&:hover ": {
           "& .block-close": {
             opacity: 1,
@@ -38,9 +37,6 @@ export const Block = ({
           },
         },
       }}
-      className="tf-nc"
-      onMouseEnter={() => setHoveringMode(mode ?? null)}
-      onMouseLeave={() => setHoveringMode(null)}
     >
       {/* CLOSE BTN */}
       {onClickDelete && (
@@ -85,8 +81,19 @@ export const Block = ({
           </Box>
         </CardActionArea>
       )}
-
-      {/* {dot && (dot === "top" || dot === "both") && (
+      <Box
+        sx={{
+          position: "relative",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        onMouseEnter={() => setHoveringMode(mode ?? null)}
+        onMouseLeave={() => setHoveringMode(null)}
+        onClick={onClick}
+      >
+        {/* {dot && (dot === "top" || dot === "both") && (
 				<Box
 					sx={{
 						height: "10px",
@@ -112,102 +119,103 @@ export const Block = ({
 					}}
 				/>
 			)} */}
-      <Grow in={true} timeout={500}>
-        <Card
-          sx={{
-            width: theme.custom.block.maxWidth,
-            maxWidth: theme.custom.block.maxWidth,
-            backgroundColor: theme.palette.background.dark,
-            color: theme.palette.text.primary,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            alignItems: "center",
-
-            border: "2px solid transparent",
-            borderRadius: theme.custom.borderRadius.small,
-            backgroundImage: `linear-gradient(${theme.palette.background.dark}, ${theme.palette.background.dark}), ${theme.palette.gradient.red}`,
-            backgroundOrigin: "border-box",
-            backgroundClip: "content-box, border-box",
-            position: "relative",
-          }}
-        >
-          {topBar && (
-            <Box
-              sx={{
-                height: theme.custom.block.barHeight,
-                width: "100%",
-                backgroundColor: theme.palette.background.default,
-                borderBottom: 1,
-                borderColor: theme.palette.background.sidebar,
-                borderImageSlice: 1,
-                borderImageSource: theme.palette.gradient.red,
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                paddingX: "10px",
-              }}
-            >
-              <Typography
-                variant="h6"
-                style={{
-                  fontSize: theme.custom.block.fontSize.bar,
-                }}
-              >
-                {topBar.text}
-              </Typography>
-            </Box>
-          )}
-          <Box
+        <Grow in={true} timeout={500}>
+          <Card
             sx={{
-              width: "100%",
+              width: theme.custom.block.maxWidth,
+              maxWidth: theme.custom.block.maxWidth,
+              backgroundColor: theme.palette.background.dark,
+              color: theme.palette.text.primary,
               display: "flex",
               flexDirection: "column",
-              justifyContent: "center",
+              justifyContent: "space-between",
               alignItems: "center",
-              padding: "20px 20px",
+
+              border: "2px solid transparent",
+              borderRadius: theme.custom.borderRadius.small,
+              backgroundImage: `linear-gradient(${theme.palette.background.dark}, ${theme.palette.background.dark}), ${theme.palette.gradient.red}`,
+              backgroundOrigin: "border-box",
+              backgroundClip: "content-box, border-box",
+              position: "relative",
             }}
           >
-            <Typography
-              variant="h6"
-              style={{
-                fontSize: "14px",
-                background: theme.palette.gradient.red,
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                fontWeight: "bold",
-              }}
-            >
-              {bodyText}
-            </Typography>
-          </Box>
-          {bottomBar && (
+            {topBar && (
+              <Box
+                sx={{
+                  height: theme.custom.block.barHeight,
+                  width: "100%",
+                  backgroundColor: theme.palette.background.default,
+                  borderBottom: 1,
+                  borderColor: theme.palette.background.sidebar,
+                  borderImageSlice: 1,
+                  borderImageSource: theme.palette.gradient.red,
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  paddingX: "10px",
+                }}
+              >
+                <Typography
+                  variant="h6"
+                  style={{
+                    fontSize: theme.custom.block.fontSize.bar,
+                  }}
+                >
+                  {topBar.text}
+                </Typography>
+              </Box>
+            )}
             <Box
               sx={{
-                height: theme.custom.block.barHeight,
                 width: "100%",
-                backgroundColor: theme.palette.background.default,
-                borderTop: 1,
-                borderImageSlice: 1,
-                borderImageSource: theme.palette.gradient.red,
                 display: "flex",
-                flexDirection: "row",
+                flexDirection: "column",
+                justifyContent: "center",
                 alignItems: "center",
-                paddingX: "10px",
+                padding: "20px 20px",
               }}
             >
               <Typography
                 variant="h6"
                 style={{
-                  fontSize: theme.custom.block.fontSize.bar,
+                  fontSize: "14px",
+                  background: theme.palette.gradient.red,
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  fontWeight: "bold",
                 }}
               >
-                {bottomBar.text}
+                {bodyText}
               </Typography>
             </Box>
-          )}
-        </Card>
-      </Grow>
+            {bottomBar && (
+              <Box
+                sx={{
+                  height: theme.custom.block.barHeight,
+                  width: "100%",
+                  backgroundColor: theme.palette.background.default,
+                  borderTop: 1,
+                  borderImageSlice: 1,
+                  borderImageSource: theme.palette.gradient.red,
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  paddingX: "10px",
+                }}
+              >
+                <Typography
+                  variant="h6"
+                  style={{
+                    fontSize: theme.custom.block.fontSize.bar,
+                  }}
+                >
+                  {bottomBar.text}
+                </Typography>
+              </Box>
+            )}
+          </Card>
+        </Grow>
+      </Box>
     </Box>
   );
 };
