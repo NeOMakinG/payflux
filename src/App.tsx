@@ -1,6 +1,6 @@
 import { SideBar } from "./components/SideBar";
 import { Box, useTheme } from "@mui/material";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
 	ImperativePanelHandle,
 	Panel,
@@ -13,6 +13,7 @@ import { FormModal } from "./components/FormModal";
 import { DeleteBlockForm } from "./components/DeleteBlockForm";
 import { useModal } from "./zustand/modal";
 import { CodeManager } from "./components/CodeManager";
+import { ContractMetadataForm } from "./components/ContractMetadataForm";
 
 function App() {
 	const theme = useTheme();
@@ -22,7 +23,7 @@ function App() {
 	const [isDragging, setIsDragging] = useState(false);
 	const modalStatus = useModal((state) => state.status);
 	const closeModal = useModal((state) => state.close);
-
+	const openModal = useModal((state) => state.open);
 	const handleCollapseClick = () => {
 		if (editorPanel.current?.getSize() === 1) {
 			editorPanel.current?.expand();
@@ -33,8 +34,13 @@ function App() {
 		editorPanel.current?.collapse();
 	};
 
+	useEffect(() => {
+		openModal("contract-metadata-form", {});
+	}, [])
+
 	return (
 		<>
+			{/* DELETE BLOCK FORM */}
 			<FormModal
 				open={modalStatus["delete-block-form"]?.status || false}
 				onClose={() => {
@@ -42,6 +48,14 @@ function App() {
 				}}
 			>
 				<DeleteBlockForm />
+			</FormModal>
+			<FormModal
+				open={modalStatus["contract-metadata-form"]?.status || false}
+				onClose={() => {
+					closeModal("contract-metadata-form");
+				}}
+			>
+				<ContractMetadataForm />
 			</FormModal>
 			<Box height="100vh" marginTop={0} display="flex" alignItems="center">
 				<SideBar />
