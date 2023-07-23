@@ -32,10 +32,13 @@ export function AddBlockModal(props: FormModalProps) {
     setBlockModal(null);
   };
 
-  const handleBlockClick = (blockModal: BlockModal, mode: Conditions | Functions) => {
+  const handleBlockClick = (
+    blockModal: BlockModal,
+    mode: Conditions | Functions
+  ) => {
     const { id, type } = blockModal;
     if (!blocksByMode[mode]) {
-      const firstId = (Object.keys(blockIdToProps).length).toString();
+      const firstId = Object.keys(blockIdToProps).length.toString();
       addPlus(id, firstId);
       if (type === BlockType.CONDITION) {
         const secondId = (Object.keys(blockIdToProps).length + 1).toString();

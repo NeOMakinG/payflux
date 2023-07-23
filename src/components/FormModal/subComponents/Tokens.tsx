@@ -3,6 +3,7 @@ import { useCallback, useState } from "react";
 import { SubmitButton } from "./SubmitButton";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import { usePayfluxStore } from "../../../zustand";
 
 type AmountsAndTokens = {
   amount: number | null;
@@ -10,8 +11,16 @@ type AmountsAndTokens = {
 }[];
 
 export const Tokens = () => {
+  const { blockIdToProps, selectedBlockModal } = usePayfluxStore((state) => ({
+    blockIdToProps: state.blockIdToProps,
+    selectedBlockModal: state.selectedBlockModal,
+  }));
+  const props = selectedBlockModal?.id
+    ? blockIdToProps[selectedBlockModal?.id]
+    : null;
+
   const [amountsAndTokens, setAmountsAndTokens] = useState<AmountsAndTokens>(
-    []
+    props?.context?.amountsAndTokens ?? []
   );
 
   const handleChangeAmount = useCallback(

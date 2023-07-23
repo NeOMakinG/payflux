@@ -2,13 +2,22 @@ import { Box, Typography } from "@mui/material";
 import { useState } from "react";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import { SubmitButton } from "./SubmitButton";
+import { usePayfluxStore } from "../../../zustand";
 
 export const TimeInterval = () => {
+  const { blockIdToProps, selectedBlockModal } = usePayfluxStore((state) => ({
+    blockIdToProps: state.blockIdToProps,
+    selectedBlockModal: state.selectedBlockModal,
+  }));
+  const props = selectedBlockModal?.id
+    ? blockIdToProps[selectedBlockModal?.id]
+    : null;
+
   const [selectedDateFirst, handleDateChangeFirst] = useState<Date | null>(
-    null
+    props?.context?.selectedDateFirst ?? null
   );
   const [selectedDateSecond, handleDateChangeSecond] = useState<Date | null>(
-    null
+    props?.context?.selectedDateSecond ?? null
   );
   return (
     <Box

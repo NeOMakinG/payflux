@@ -12,4 +12,5 @@ export type BlockProps = {
   };
   dot?: "top" | "bottom" | "both";
   onClickDelete?: () => void;
+  onClick?: () => void;
 };
