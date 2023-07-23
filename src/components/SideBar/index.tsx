@@ -1,17 +1,17 @@
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { TooltipWrapper } from "../TooltipWrapper";
 import { useMetadata } from "../../zustand/metadata";
-import { PaymasterContractType, useCompileContract, useContract } from "../../hooks/useContract";
+import { useCompileContract } from "../../hooks/useContract";
 import { useEffect } from "react";
 import { deployContract } from "../../utils/wallet/connectToWallet";
 
 export function SideBar() {
   const theme = useTheme();
-  const { downloadSource, contractName } = useMetadata((state) => ({
+  const { downloadSource, contractName, } = useMetadata((state) => ({
     downloadSource: state.downloadSource,
     contractName: state.contractName,
   }));
-  const contract = useContract(PaymasterContractType.DepositPaymaster);
+  const contract = useMetadata((state) => state.downloadSource);
 
 	const { compiledContract, compile, compiling } = useCompileContract(contract);
 
