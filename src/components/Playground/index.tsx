@@ -19,8 +19,7 @@ function renderBlocks(struct: BlocksStruct, theme: Theme) {
       component={"li"}
     >
       <BlockGenerator id={struct.id} />
-      {((Array.isArray(struct.children) && struct.children.length > 0) ||
-        !struct.children) && (
+      {(Array.isArray(struct.children) && struct.children.length > 0) && (
         <Box
           sx={{
             display: "flex",

@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import { BlockType } from "../../shared/functions";
 import { BlockId } from "../../shared/structure";
 import { usePayfluxStore } from "../../zustand";
@@ -11,7 +12,7 @@ export const BlockGenerator = ({ id }: { id: BlockId }) => {
   const openModal = useModal((state) => state.open);
 
   if (id === "start") return <Block type={BlockType.START} />;
-  if (props.type === BlockType.PLUS) return <PlusButton id={id} />
+  if (props.type === BlockType.PLUS) return  <Box className="tf-nc"><PlusButton id={id} /></Box>
   return (
     <Block
       {...props}
