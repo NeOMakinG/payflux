@@ -1,3 +1,3 @@
 export type TrampolineProvider = {
-  request(params: {method: string}): Promise<unknown>;
+  request(params: {method: string, params?: object }): Promise<unknown>;
 }

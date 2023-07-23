@@ -1,6 +1,9 @@
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { TooltipWrapper } from "../TooltipWrapper";
 import { useMetadata } from "../../zustand/metadata";
+import { PaymasterContractType, useCompileContract, useContract } from "../../hooks/useContract";
+import { useEffect } from "react";
+import { deployContract } from "../../utils/wallet/connectToWallet";
 
 export function SideBar() {
   const theme = useTheme();
@@ -8,6 +11,20 @@ export function SideBar() {
     downloadSource: state.downloadSource,
     contractName: state.contractName,
   }));
+  const contract = useContract(PaymasterContractType.DepositPaymaster);
+
+	const { compiledContract, compile, compiling } = useCompileContract(contract);
+
+	useEffect(() => {
+		if (!compiling && compiledContract) {
+			console.log(compiledContract);
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const bytecode = (compiledContract as any).contracts["contract"][
+				"BasePaymaster"
+			].evm.bytecode.object;
+			deployContract(bytecode);
+		}
+	}, [compiling, compiledContract]);
 
   const handleDownload = () => {
     const element = document.createElement("a");
@@ -110,7 +127,9 @@ export function SideBar() {
           </IconButton>
         </TooltipWrapper>
         <TooltipWrapper label="Deploy the contract">
-          <IconButton>
+          <IconButton
+            onClick={() => compile()}
+          >
             <svg
               width="21"
               height="21"
