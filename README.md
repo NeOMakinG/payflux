@@ -1,27 +1,39 @@
-# React + TypeScript + Vite
+# PayFlux
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Our solution offers a personalized gas payment strategy tailored for each business. With our dApp, businesses can define a specific group of users whose gas fees they are willing to cover. They can also define specific conditions for those groups.
 
-Currently, two official plugins are available:
+Businesses can utilize verified identity protocols to ensure that they're compensating gas costs for genuine users only. They can also choose to pay for users who maintain an active subscription, or for users who have been invited through a referral system.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Additionally, the payment strategy could be designed based on transaction volume, specific times of the day, or to favor early adopters.
 
-## Expanding the ESLint configuration
+However, there are some limitations. When the existing transaction pool logic is integrated with Account Abstraction's (AA's) arbitrary transaction validity, a new type of attack on the Ethereum network becomes possible: a single transaction within a mined block can invalidate a significant number of previously valid pending transactions. In the event of a sustained attack, nodes could end up wasting considerable computational resources on validating, propagating, and eventually discarding these transactions. To mitigate this risk, the EIP introduces several transaction pool restrictions, thereby reducing the risk to a level similar to non-AA transactions.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## How to run locally?
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+```
+yarn install
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+```
+yarn start
+```
+
+## How to use the app?
+
+- When you go to the app, you need to fill the contract name.
+![Fill contract name](./images/fill-contract-name.png)
+
+- Then you arrive to the main page
+![Main page](./images/home-page.png)
+
+- You can add some blocks to customize the base template of the paymaster contract.
+![Home page hover btn](./images/home-page-btn.png)
+
+- You can click to conditions button and you can see a modal to select the condition
+![Main page](./images/conditions.png)
+
+- You can click on one of them and see a new block added into the tree and the updated code. 
+![Main page](./images/home-page-final.png)
+
+- If you hover a block, you can see the corresponding statement in the code
+![Main page](./images/home-page-code-hover.png)
