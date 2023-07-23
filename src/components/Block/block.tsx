@@ -158,14 +158,19 @@ export const Block = ({
                   flexDirection: "row",
                   alignItems: "center",
                   paddingX: "10px",
-                }}
+  								userSelect: "none",
+              }}
               >
                 <Typography
                   variant="h6"
                   style={{
                     fontSize: theme.custom.block.fontSize.bar,
                   }}
-                >
+  								sx={{
+									userSelect: "none",
+								}}
+								
+              >
                   {topBar.text}
                 </Typography>
               </Box>

@@ -36,7 +36,7 @@ export const WhitelistedAddresses = () => {
           gap: "10px",
         }}
       >
-        <Typography variant="h6">Whitelisted Addresses :</Typography>
+        <Typography variant="h6" whiteSpace={"nowrap"}>Whitelisted Addresses :</Typography>
         <TextField
           label="Whitelisted Addresses"
           multiline

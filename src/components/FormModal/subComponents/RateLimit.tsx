@@ -48,7 +48,7 @@ export const RateLimit = () => {
           gap: "10px",
         }}
       >
-        <Typography variant="h6">Rate Limit :</Typography>
+        <Typography variant="h6" whiteSpace={"nowrap"}>Rate Limit :</Typography>
         <TextField
           label="Rate Limit"
           placeholder="Txs per day per address"

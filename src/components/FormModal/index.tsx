@@ -14,17 +14,26 @@ const style = {
 	":focus": {
 		outline: "none",
 	},
+  minWidth: "700px"
 };
 
 export function FormModal({ onClose, open, children }: FormModalProps) {
+  const handleClose = (event: React.MouseEvent<HTMLDivElement, MouseEvent>, reason?: string) => {
+    if (reason && reason == "backdropClick") return;
+    onClose();
+  }
+
 	return (
 		<Modal
 			aria-labelledby="transition-modal-title"
 			aria-describedby="transition-modal-description"
 			open={open}
-			onClose={onClose}
+			onClose={handleClose}
 			closeAfterTransition
 			disablePortal
+      sx={{
+        minWidth: "700px"
+      }}
 		>
 			<Fade in={open}>
 				<Box sx={style}>{children}</Box>

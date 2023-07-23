@@ -48,7 +48,7 @@ export const RateTreshold = () => {
           gap: "10px",
         }}
       >
-        <Typography variant="h6">Rate Treshold :</Typography>
+        <Typography variant="h6" whiteSpace={"nowrap"}>Rate Treshold :</Typography>
         <TextField
           label="Rate Treshold"
           placeholder="Txs per day per address"
