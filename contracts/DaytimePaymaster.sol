@@ -11,25 +11,24 @@ import "@openzeppelin/contracts/utils/Address.sol";
  */
 contract DaytimePaymaster is BasePaymaster {
     using Address for address payable;
-    uint256 private constant DAY_START = 6;   // 6am
-    uint256 private constant DAY_END = 18;    // 6pm
+    uint16 dayStart;
+    uint16 dayEnd;
 
-    constructor(IEntryPoint _entryPoint) BasePaymaster(_entryPoint) {}
+    constructor(IEntryPoint _entryPoint, uint16 _dayStart, uint16 _dayEnd) BasePaymaster(_entryPoint) {
+        dayStart = _dayStart;
+        dayEnd = _dayEnd;
+    }
 
     function _validatePaymasterUserOp(UserOperation calldata userOp, bytes32 /*userOpHash*/, uint256 /*maxcost*/)
         internal view override returns (bytes memory /*context*/, uint256 /*validationData*/)
     {
-        // Note: This paymaster is very loose in its checks. For a more complex paymaster, you would
-        // probably want to check the details of the UserOp and possibly use the userOpHash.
-
         uint256 hour = (block.timestamp / 60 / 60) % 24;  // Get the current hour in UTC
-        require(hour >= DAY_START && hour < DAY_END, "DaytimePaymaster: transactions are only covered during daytime");
+        require(hour >= dayStart && hour < dayEnd, "DaytimePaymaster: transactions are only covered during daytime");
 
         // No need to return any context or validationData since we don't do anything in _postOp
         return ("",0);
     }
 
     function _postOp(PostOpMode /*mode*/, bytes calldata /*context*/, uint256 /*actualGasCost*/) internal override {
-        // This paymaster does not need to do anything in postOp since it does not have any state to update
     }
 }
