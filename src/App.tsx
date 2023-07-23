@@ -13,6 +13,7 @@ import { FormModal } from "./components/FormModal";
 import { DeleteBlockForm } from "./components/DeleteBlockForm";
 import { useModal } from "./zustand/modal";
 import { CodeManager } from "./components/CodeManager";
+import "./app.css";
 import { ContractMetadataForm } from "./components/ContractMetadataForm";
 
 function App() {
@@ -70,6 +71,7 @@ function App() {
                 position={"relative"}
                 display={"flex"}
                 justifyContent={"center"}
+                className={"noBar"}
               >
                 <Box position={"absolute"}>
                   <Playground blockStructure={blockStructure} />

@@ -42,7 +42,7 @@ export const TimeInterval = () => {
           gap: "10px",
         }}
       >
-        <Typography variant="h6">Time Interval :</Typography>
+        <Typography variant="h6" whiteSpace={"nowrap"}>Time Interval :</Typography>
         <TimePicker
           ampm={false}
           label="24 hours"

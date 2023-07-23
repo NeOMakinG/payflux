@@ -14,7 +14,6 @@ export const BlockPresenter: React.FC<BlockPresenterProps> = ({
   return (
     <Card
       sx={{
-        width: theme.custom.block.maxWidth,
         maxWidth: theme.custom.block.maxWidth,
         backgroundColor: theme.palette.background.dark,
         color: theme.palette.text.primary,

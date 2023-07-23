@@ -1,10 +1,15 @@
 import { useMemo } from "react";
-import { BlockType, Functions } from "../../shared/functions";
+import { BlockType, Conditions, Functions } from "../../shared/functions";
 import { BlocksStruct } from "../../shared/structure";
 import { spacer } from "../../utils/spacer";
 import { usePayfluxStore } from "../../zustand";
 import { CodeEditor, Snippet } from "../CodeEditor";
-import { ContractFnToCode, FnDefinition } from "./types";
+import {
+  ConditionDefinition,
+  ContractConditionsToCode,
+  ContractFnToCode,
+  FnDefinition,
+} from "./types";
 import { getBaseContractStructure } from "../../utils/baseContractStructure";
 import { useMetadata } from "../../zustand/metadata";
 
@@ -38,6 +43,19 @@ const contractFnToCode: ContractFnToCode = {
     to.transfer(amount);
   }`,
     use: `pay(to, amount)`,
+  }),
+};
+
+const contractConditionsToCode: ContractConditionsToCode = {
+  [Conditions.WHITELIST]: () => ({
+    use: ` require(
+            whilelist[sender],
+            "WhitelistPaymaster: sender not whitelisted"
+        );`,
+    var: `mapping(address => bool) public whitelist`,
+    construct: `		for (uint256 i = 0; i < whitelist.length; i++) {
+            whilelist[whitelist[i]] = true;
+        }`,
   }),
 };
 
@@ -93,8 +111,48 @@ export function CodeManager() {
       }
     }
 
+    if (type === BlockType.CONDITION) {
+      const cond = contractConditionsToCode[
+        (mode as Conditions) || ""
+      ] as ConditionDefinition;
+      const resultCond = cond && cond();
+
+      // add condition use
+      contractStructure.validatePaymasterUsOpBody.push({
+        id:
+          "validate-paymaster-usop-body-" +
+          contractStructure.validatePaymasterUsOpBody.length +
+          1,
+        mode,
+        value: (resultCond && spacer(6) + resultCond.use) || "",
+      });
+
+      // add condition var
+      if (resultCond.var) {
+        contractStructure.vars.push({
+          id:
+            "validate-paymaster-usop-vars-" + contractStructure.vars.length + 1,
+          mode,
+          value: resultCond.var,
+        });
+      }
+
+      // add construct statements
+      if (resultCond.construct) {
+        contractStructure.constructorBody.push({
+          id:
+            "validate-paymaster-usop-construct-" +
+            contractStructure.constructorBody.length +
+            1,
+          mode,
+          value: resultCond.construct,
+        });
+      }
+    }
+
     if (struct.children && struct.children.length > 0) {
       struct.children.forEach((child) => {
+        console.log("Add child", child);
         getPopulatedContractStructure(contractStructure, child);
       });
     }

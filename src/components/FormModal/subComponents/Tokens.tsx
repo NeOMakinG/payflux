@@ -73,7 +73,7 @@ export const Tokens = () => {
           gap: "10px",
         }}
       >
-        <Typography variant="h6">Minimum Amount by Token :</Typography>
+        <Typography variant="h6" whiteSpace={"nowrap"}>Minimum Amount by Token :</Typography>
         <Box
           sx={{
             width: "100%",
