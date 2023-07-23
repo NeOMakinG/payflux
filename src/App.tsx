@@ -53,9 +53,7 @@ function App() {
       </FormModal>
       <FormModal
         open={modalStatus["contract-metadata-form"]?.status || false}
-        onClose={() => {
-          closeModal("contract-metadata-form");
-        }}
+        onClose={() => null}
       >
         <ContractMetadataForm />
       </FormModal>
