@@ -8,6 +8,16 @@ Additionally, the payment strategy could be designed based on transaction volume
 
 However, there are some limitations. When the existing transaction pool logic is integrated with Account Abstraction's (AA's) arbitrary transaction validity, a new type of attack on the Ethereum network becomes possible: a single transaction within a mined block can invalidate a significant number of previously valid pending transactions. In the event of a sustained attack, nodes could end up wasting considerable computational resources on validating, propagating, and eventually discarding these transactions. To mitigate this risk, the EIP introduces several transaction pool restrictions, thereby reducing the risk to a level similar to non-AA transactions.
 
+## Paymasters deployed on Mumbai & Sepolia
+
+Mumbai:
+
+- RateLimitPaymaster: 0x23e2F837D05cF8E50e354794fB503b50DE9Efe9F
+- ReferredUserPaymaster: 0x85bfe6c7774Cd83534dEe30Cde3c92e355123777
+- DaytimePaymaster: 0xc473082Ace2b238369e72BdF45A149682656d733
+- VerifyingPaymaster: 0x203e869818BdEE6CcCC7460Daf9A1AFF3a8756B3
+- WhitelistPaymaster: 0x8A14312dff7A16d42943ac4eE58CE8eFb03289d3
+
 ## How to run locally?
 
 ```
