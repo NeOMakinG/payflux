@@ -50,7 +50,10 @@ export function CodeManager() {
     })
   );
 
-  const contractName = useMetadata((state) => state.contractName);
+  const { contractName, setDownloadSource } = useMetadata((state) => ({
+    contractName: state.contractName,
+    setDownloadSource: state.setDownloadSource,
+  }));
 
   const getPopulatedContractStructure = (
     contractStructure: Record<string, Snippet[]>,
@@ -99,13 +102,23 @@ export function CodeManager() {
   };
 
   const populatedContractStructure = useMemo(
-    () =>
-      getPopulatedContractStructure(
+    () => {
+      const contractSource = getPopulatedContractStructure(
         JSON.parse(
           JSON.stringify(getBaseContractStructure(contractName || "XXX_XXX"))
         ),
         blockStructure
-      ),
+      );
+
+      setDownloadSource(
+        Object.values(contractSource)
+          .flat()
+          .map((e) => e.value)
+          .join()
+      );
+
+      return contractSource;
+    },
     // eslint-disable-next-line
     [blockStructure, contractName]
   );
