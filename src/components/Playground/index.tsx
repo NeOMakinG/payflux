@@ -1,117 +1,67 @@
 import { Box, useTheme } from "@mui/material";
 import { BlocksStruct } from "../../shared/structure";
 import { BlockGenerator } from "./BlockGenerator";
-import { PlusButton } from "../PlusButton";
 import { Theme } from "@mui/material";
 import "treeflex/dist/css/treeflex.css";
 import "./custom-treeflex.css";
+import { AddBlockModal } from "../AddBlockModal/AddBlockModal";
+import { usePayfluxStore } from "../../zustand";
 
-const map2: BlocksStruct = {
-	id: "start",
-	children: [
-		{
-			id: "1",
-			children: [
-				{
-					id: "1.2",
-					children: [
-						{
-							id: "1.2.1",
-							children: [],
-						},
-						{
-							id: "1.2.2",
-							children: [],
-						},
-						{
-							id: "1.2.3",
-							children: [
-								{
-									id: "1.2.3.4",
-									children: [],
-								},
-							],
-						},
-					],
-				},
-				{
-					id: "1.2.3",
-					children: [],
-				},
-			],
-		},
-		{
-			id: "2.1",
-			children: [
-				{
-					id: "2.1.1",
-				},
-			],
-		},
-	],
-};
 function renderBlocks(struct: BlocksStruct, theme: Theme) {
-	if (!struct) {
-		return (
-			<Box
-				component={"li"}
-				sx={{
-					display: "flex",
-					flexDirection: "column",
-					justifyContent: "center",
-					alignItems: "center",
-				}}
-			>
-				<PlusButton />
-			</Box>
-		);
-	}
-
-	if (struct) {
-		return (
-			<Box
-				sx={{
-					display: "flex",
-					flexDirection: "column",
-					justifyContent: "center",
-					alignItems: "center",
-				}}
-				component={"li"}
-			>
-				<BlockGenerator id={struct.id} />
-				{((Array.isArray(struct.children) && struct.children.length > 0) ||
-					!struct.children) && (
-					<Box
-						sx={{
-							display: "flex",
-							flexDirection: "row",
-							justifyContent: "center",
-							alignItems: "flex-start",
-							position: "relative",
-						}}
-						component={"ul"}
-					>
-						{!struct.children && <PlusButton />}
-						{Array.isArray(struct.children) &&
-							struct.children.map((block) => {
-								return renderBlocks(block, theme);
-							})}
-					</Box>
-				)}
-			</Box>
-		);
-	}
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+      component={"li"}
+    >
+      <BlockGenerator id={struct.id} />
+      {(Array.isArray(struct.children) && struct.children.length > 0) && (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "flex-start",
+            position: "relative",
+          }}
+          component={"ul"}
+        >
+          {Array.isArray(struct.children) &&
+            struct.children.map((block) => {
+              return renderBlocks(block, theme);
+            })}
+        </Box>
+      )}
+    </Box>
+  );
 }
 
-export const Playground = () => {
-	const theme = useTheme();
-	const structure = map2;
+type PlaygroundProps = {
+  blockStructure: BlocksStruct;
+};
 
-	return (
-		<Box className="tf-tree tf-gap-lg">
-			{structure && (
-				<Box component={"ul"}>{renderBlocks(structure, theme)}</Box>
-			)}
-		</Box>
-	);
+export const Playground = ({ blockStructure }: PlaygroundProps) => {
+  const theme = useTheme();
+  const { setBlockModal, selectedBlockModal } = usePayfluxStore((state) => ({
+    setBlockModal: state.setBlockModal,
+    selectedBlockModal: state.selectedBlockModal,
+  }));
+
+  return (
+    <Box className="tf-tree tf-gap-lg">
+      {blockStructure && (
+        <Box component={"ul"}>{renderBlocks(blockStructure, theme)}</Box>
+      )}
+      <AddBlockModal
+        onClose={() => setBlockModal(null)}
+        open={!!selectedBlockModal}
+      >
+        <></>
+      </AddBlockModal>
+    </Box>
+  );
 };

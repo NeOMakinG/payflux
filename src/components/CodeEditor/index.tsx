@@ -1,19 +1,22 @@
 import { Box, useTheme } from "@mui/material";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import vscDarkPlus from "react-syntax-highlighter/dist/esm/styles/prism/vsc-dark-plus";
+import { Conditions, Functions } from "../../shared/functions";
 
 export type Snippet = {
+  id: string;
   value: string;
+  mode: Functions | Conditions | null;
 };
 
 type CodeEditorProps = {
   snippets: Array<Snippet>;
-  highlightedIndex?: number;
+  highlightedMode: Functions | Conditions | null;
 };
 
 export const CodeEditor: React.FC<CodeEditorProps> = ({
   snippets,
-  highlightedIndex,
+  highlightedMode,
 }) => {
   const theme = useTheme();
 
@@ -48,7 +51,7 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
             width: "min-content",
             overflow: "visible",
             backgroundColor: theme.palette.background.dark,
-            ...(index === highlightedIndex ? highlightedStyle : null),
+            ...(snippet.mode === highlightedMode ? highlightedStyle : null),
           }}
           style={vscDarkPlus}
           language="solidity"

@@ -1,81 +1,30 @@
 import { SideBar } from "./components/SideBar";
-import { CodeEditor } from "./components/CodeEditor";
 import { Box, useTheme } from "@mui/material";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
-	ImperativePanelHandle,
-	Panel,
-	PanelGroup,
-	PanelResizeHandle,
+  ImperativePanelHandle,
+  Panel,
+  PanelGroup,
+  PanelResizeHandle,
 } from "react-resizable-panels";
 import { Playground } from "./components/Playground";
-import React from "react";
-
-const snippetsMonkeyPatch = [
-  {
-    id: 1,
-    value: `//SPDX-License-Identifier: Unlicense
-pragma solidity 0.8.16;
-
-import {console} from 'hardhat/console.sol';
-import {IGreeter} from '../interfaces/IGreeter.sol';
-
-/// @title A contract for boilerplating
-/// @author Hardhat (and DeFi Wonderland)
-/// @notice You can use this contract for only the most basic tests
-/// @dev This is just a try out
-/// @custom:experimental This is an experimental contract.`,
-  },
-  {
-    id: 2,
-    value: `contract Greeter is IGreeter {
-      string public override greeting;
-    
-      constructor(string memory _greeting) {
-        console.log('Deploying a Greeter with greeting:', _greeting);
-        greeting = _greeting;
-      }
-      function greet() external view override returns (string memory _greet) {
-        return greeting;
-      }`,
-  },
-  {
-    id: 3,
-    value: `  /// @notice Sets greeting that will be used during greet
-    /// @dev Some explanation only defined for devs
-    /// @param _greeting The greeting to be used
-    /// @return _changedGreet Was greeting changed or nah
-    function setGreeting(string memory _greeting) external override returns (bool _changedGreet) {
-      if (bytes(_greeting).length == 0) revert EmptyGreeting();
-      console.log('Changing greeting from', greeting, 'to', _greeting);
-      greeting = _greeting;
-      _changedGreet = true;
-      emit GreetingSet(_greeting);
-    }
-    function setGreeting(string memory _greeting) external override returns (bool _changedGreet) {
-      if (bytes(_greeting).length == 0) revert EmptyGreeting();
-      console.log('Changing greeting from', greeting, 'to', _greeting);
-      greeting = _greeting;
-      _changedGreet = true;
-      emit GreetingSet(_greeting);
-    }
-    function setGreeting(string memory _greeting) external override returns (bool _changedGreet) {
-      if (bytes(_greeting).length == 0) revert EmptyGreeting();
-      console.log('Changing greeting from', greeting, 'to', _greeting);
-      greeting = _greeting;
-      _changedGreet = true;
-      emit GreetingSet(_greeting);
-    }
-  }`,
-	},
-];
+import { usePayfluxStore } from "./zustand";
+import { FormModal } from "./components/FormModal";
+import { DeleteBlockForm } from "./components/DeleteBlockForm";
+import { useModal } from "./zustand/modal";
+import { CodeManager } from "./components/CodeManager";
+import "./app.css";
+import { ContractMetadataForm } from "./components/ContractMetadataForm";
 
 function App() {
-	const theme = useTheme();
-	const editorPanel = useRef<ImperativePanelHandle>(null);
-	const [isCollapsed, setIsCollapsed] = useState(false);
-	const [isDragging, setIsDragging] = useState(false);
-
+  const theme = useTheme();
+  const blockStructure = usePayfluxStore((state) => state.blockStructure);
+  const editorPanel = useRef<ImperativePanelHandle>(null);
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const modalStatus = useModal((state) => state.status);
+  const closeModal = useModal((state) => state.close);
+  const openModal = useModal((state) => state.open);
   const handleCollapseClick = () => {
     if (editorPanel.current?.getSize() === 1) {
       editorPanel.current?.expand();
@@ -83,8 +32,13 @@ function App() {
       return;
     }
 
-		editorPanel.current?.collapse();
-	};
+    editorPanel.current?.collapse();
+  };
+
+  useEffect(() => {
+    openModal("contract-metadata-form", {});
+    // eslint-disable-next-line
+  }, []);
 
   const worker = new Worker('../dist/bundle.js');
   worker.addEventListener('message', function (e) {
@@ -96,21 +50,39 @@ function App() {
 
   return (
     <>
+      {/* DELETE BLOCK FORM */}
+      <FormModal
+        open={modalStatus["delete-block-form"]?.status || false}
+        onClose={() => {
+          closeModal("delete-block-form");
+        }}
+      >
+        <DeleteBlockForm />
+      </FormModal>
+      <FormModal
+        open={modalStatus["contract-metadata-form"]?.status || false}
+        onClose={() => null}
+      >
+        <ContractMetadataForm />
+      </FormModal>
       <Box height="100vh" marginTop={0} display="flex" alignItems="center">
         <SideBar />
         <PanelGroup direction="horizontal">
           <Box display="flex" alignItems="center" width="100%">
             <Panel id="tree" defaultSize={50} order={1}>
               <Box
-							height="90vh"
-							overflow={"auto"}
-							paddingTop={"20px"}
-              position={"relative"}
-						>
-							<Box position={"absolute"}>
-								<Playground />
-							</Box>
-						</Box>
+                height="90vh"
+                overflow={"auto"}
+                paddingTop={"20px"}
+                position={"relative"}
+                display={"flex"}
+                justifyContent={"center"}
+                className={"noBar"}
+              >
+                <Box position={"absolute"}>
+                  <Playground blockStructure={blockStructure} />
+                </Box>
+              </Box>
             </Panel>
             <Panel
               ref={editorPanel}
@@ -161,10 +133,7 @@ function App() {
                 borderRadius={`${theme.custom.borderRadius.default} 0 0 ${theme.custom.borderRadius.default}`}
                 bgcolor={theme.palette.background.sidebar}
               >
-                <CodeEditor
-                  highlightedIndex={1}
-                  snippets={snippetsMonkeyPatch}
-                />
+                <CodeManager />
               </Box>
             </Panel>
           </Box>

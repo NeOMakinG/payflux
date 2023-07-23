@@ -1,14 +1,34 @@
-import { SpeedDial, SpeedDialAction, SpeedDialIcon, useTheme } from "@mui/material"
-import FunctionsIcon from '@mui/icons-material/Functions';
-import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
+import {
+  SpeedDial,
+  SpeedDialAction,
+  SpeedDialIcon,
+  useTheme,
+} from "@mui/material";
+import FunctionsIcon from "@mui/icons-material/Functions";
+import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
+import { usePayfluxStore } from "../../zustand";
+import { PlusButtonProps } from "./types";
+import { BlockType } from "../../shared/functions";
 
-export const PlusButton = () => {
+export const PlusButton = ({ id }: PlusButtonProps) => {
   const theme = useTheme();
+  const { setBlockModal } = usePayfluxStore((state) => ({
+    setBlockModal: state.setBlockModal,
+  }));
 
   const actions = [
-    { icon: <FunctionsIcon />, name: 'Functions' },
-    { icon: <QuestionMarkIcon />, name: 'Conditions' },
-  ]
+    {
+      icon: <FunctionsIcon />,
+      name: "Functions",
+      action: () => setBlockModal({ type: BlockType.FUNCTION, id, mode: null }),
+    },
+    {
+      icon: <QuestionMarkIcon />,
+      name: "Conditions",
+      action: () =>
+        setBlockModal({ type: BlockType.CONDITION, id, mode: null }),
+    },
+  ];
 
   return (
     <SpeedDial
@@ -17,7 +37,7 @@ export const PlusButton = () => {
         sx: {
           backgroundImage: theme.palette.gradient.red,
           color: theme.palette.text.primary,
-        }
+        },
       }}
       direction="down"
       icon={<SpeedDialIcon />}
@@ -27,8 +47,9 @@ export const PlusButton = () => {
           key={action.name}
           icon={action.icon}
           tooltipTitle={action.name}
+          onClick={action.action}
         />
       ))}
     </SpeedDial>
-  )
-}
+  );
+};
